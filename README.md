@@ -48,10 +48,13 @@ Create some users, then signin, play with API's etc
 ### NOTE:
 
 1. Filling all information in both environment files is necessary to run the app.
-2. Admin email address is "[admin@threadsapp.co.in](mailto:admin@threadsapp.co.in)".You can visit "http://localhost:3000/management" for the admin page.
+2. Admin email address is "[admin@threadsapp.co.in](mailto:admin@threadsapp.co.in)". You can visit "http://localhost:3000/management" for the admin page.
 3. For the AWS s3 bucket, you need to fill correct information in the "config.env" file.
 4. User profile pictures are saved in the "uploads" folder.
 5. Post pictures are uploaded on s3 bucket.
 6. You will get the option to add dummy data while installing dependencies of API. It will create 25 users and 25 posts and this user will follow each other randomly.
 7. Follow all the steps properly to run the application.
 8. You can use the command "npm run add_users" to add dummy data again. New dummy data will replace old dummy data.
+
+### Some points about the app:
+1. All Users and New Users section will show other users, but not yourself. 

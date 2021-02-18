@@ -58,3 +58,8 @@ Create some users, then signin, play with API's etc
 
 ### Some points about the app:
 1. All Users and New Users section will show other users, but not yourself. 
+2. Demo of the app {Not meant for testing/training purpose} : https://threadsapp.co.in/ 
+
+
+
+--------------------

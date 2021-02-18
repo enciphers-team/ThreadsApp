@@ -1,0 +1,45 @@
+{
+  "name": "vulnerable_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "add_users": "node add_user.js",
+    "postinstall": "npm run add_users",
+    "client": "cd client && npm start",
+    "client_install": "cd client && npm install",
+    "start": "concurrently -n 'server,client' -c 'red,blue' \"nodemon server.js\" \"npm run client\""
+  },
+  "author": "enciphers",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.781.0",
+    "axios": "^0.21.1",
+    "concurrently": "^5.3.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.4",
+    "mongoose-deep-populate": "^3.2.0",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "npm": "^6.14.11",
+    "open-graph-scraper": "^4.7.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.88.2",
+    "socket.io": "^3.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

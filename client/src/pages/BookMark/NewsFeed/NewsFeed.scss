@@ -1,0 +1,117 @@
+.home__newsfeed {
+  margin-left: 25%;
+  width: 40%;
+  padding-bottom: 10rem;
+}
+
+.newsfeed__single-post {
+  margin-bottom: 5rem;
+  &__text {
+    font-size: 1.3rem;
+    color: var(--color-grey-dark-3);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__img {
+    width: 100%;
+    display: block;
+    height: 25rem;
+  }
+
+  &__likes {
+    font-size: 1.3rem;
+    margin: 1rem 0;
+    span {
+      font-weight: 700;
+    }
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__left {
+      display: flex;
+      align-items: center;
+      a {
+        margin-right: 1rem;
+        img {
+          width: 5rem;
+          height: 5rem;
+          border-radius: 50%;
+        }
+      }
+
+      &__name {
+        font-size: 1.5rem;
+        text-transform: capitalize;
+      }
+    }
+
+    &__right {
+      &__icon {
+        color: currentColor;
+        font-size: 1.4rem;
+      }
+      button {
+        width: 5rem;
+        height: 3rem;
+        background-color: white;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        color: var(--color-grey-light-4);
+        &:hover {
+          color: var(--color-grey-dark-3);
+        }
+      }
+    }
+  }
+}
+
+.single-post__url {
+  height: 6rem;
+  width: 90%;
+  display: block;
+  background-color: var(--color-grey-light-4);
+  margin: auto;
+  display: flex;
+  margin-bottom: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.single-post__url:hover {
+  text-decoration: none;
+}
+.single-post__url__img {
+  width: 20%;
+  height: 100%;
+}
+
+.single-post__url__title {
+  height: 100%;
+  width: 80%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.share-post {
+  margin-bottom: 5rem;
+}
+
+.share-post-single {
+  border: 1px solid var(--color-grey-light-4);
+  margin-top: 2rem;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.shared-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-left: 0rem;
+}

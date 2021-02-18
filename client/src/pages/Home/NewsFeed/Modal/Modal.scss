@@ -1,0 +1,26 @@
+.modal-header {
+  button {
+    padding: 1rem;
+    color: white;
+    background-color: var(--color-primary);
+  }
+}
+
+.modal-users__single {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+  background-color: var(--color-grey-light-1);
+  box-shadow: 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  img {
+    height: 5rem;
+    width: 5rem;
+    margin-right: 3rem;
+  }
+
+  div {
+    font-size: 1.5rem;
+  }
+}

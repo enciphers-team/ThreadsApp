@@ -1,0 +1,12 @@
+.all-user {
+  margin-left: 25%;
+  width: 70%;
+  padding-bottom: 10rem;
+  height: 100vh;
+  padding-top: 3rem;
+
+  @media only screen and (max-width: 700px) {
+    margin-left: 30% !important;
+    padding: 2rem;
+  }
+}

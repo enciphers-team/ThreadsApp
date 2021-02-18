@@ -1,0 +1,35 @@
+.form-group {
+  width: 80%;
+  // margin-top: 5rem;
+  margin: auto;
+  margin-bottom: 20px;
+
+  &__input {
+    // height: 35px;
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+    border: none;
+    background-color: var(--color-grey-light-2);
+    font-size: 14px;
+    padding: 1rem;
+
+    &:focus {
+      background-color: var(--color-grey-light-3);
+    }
+
+    &--error {
+      border: 1px solid var(--color-tertiary);
+    }
+  }
+
+  &__label {
+    font-size: 1.3rem;
+    margin-bottom: 5rem;
+  }
+
+  &__error {
+    font-size: 12px;
+    color: var(--color-tertiary);
+  }
+}

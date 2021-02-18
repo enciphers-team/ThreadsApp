@@ -1,0 +1,28 @@
+.home__newsfeed__search {
+  margin: 3rem 0;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  border-bottom: 1px solid var(--color-grey-light-4);
+  position: relative;
+  color: var(--color-grey-light-4);
+  padding-bottom: 1rem;
+
+  &__icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: var(--color-grey-light-4);
+  }
+
+  input {
+    width: 90%;
+    border: none;
+    background-color: transparent;
+    flex: 1;
+    color: var(--color-grey-dark-1);
+
+    &::placeholder {
+      color: var(--color-grey-dark-3);
+    }
+  }
+}

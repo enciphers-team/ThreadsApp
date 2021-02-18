@@ -1,0 +1,133 @@
+/***********************************
+DEFINING ROOT VARIABLES
+************************************/
+:root {
+  --color-primary: #30a9de;
+  --color-primary-light: #88ceec;
+  --color-primary-dark: #1977a0;
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+  --color-grey-dark-1: #111;
+  --color-grey-dark-2: #333;
+  --color-grey-dark-3: #777;
+  --color-grey-dark-4: #999;
+  --color-grey-dark-5: #808080;
+  --font-family-primary: 'Open Sans', sans-serif;
+  --font-family-secondary: 'Berkshire Swash', cursive;
+}
+
+.profile {
+  width: 50%;
+}
+
+html {
+  box-sizing: border-box;
+  /*
+    -->Here we are defining root font size 
+    -->Its in percentage to have functionality of zoom in and zoom out and it will change the font size of 
+    -->The percentage also helps if user change default font size of browser so percentage value will adjust according to that 
+    -->root default font size of browser is 16px so 62.5% of 16px will be 10px which will be equal to 1rem so it will be easy to use rem  with respect to 10px instead of with respect to 16px 
+    -->  1rem = 10px
+  */
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-grey-dark-1);
+  height: 100vh;
+  // padding: 3rem 5rem;
+  padding-top: 0;
+  // background-color: #eee;
+  background-color: #fafcff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Applying box-sizing property of all element and before and after Pseudo elements to border box so width and height will be equal to define width and height */
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+  border: none;
+}
+
+button {
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+  color: inherit;
+}
+
+
+a {
+  text-decoration: none !important;
+  color: var(--color-grey-dark-1);
+
+  a:hover {
+    color: currentColor !important;
+  }
+}
+
+
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 56.25%;
+    /* 1rem = 9px */
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  html {
+    font-size: 50%;
+    /* 1rem = 8px */
+  }
+}
+
+/* FOR  SMALL SCREEN SIZE */
+@media only screen and (max-width: 250px) {
+  html {
+    font-size: 40%;
+    /* 1 rem = 6.4px */
+  }
+}
+
+/* Its only used here*/
+@media only screen and (max-width: 150px) {
+  html {
+    font-size: 20%;
+    /* 1rem = 3.2px */
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+
+@media only screen and (min-width: 1600px) {
+  html {
+    font-size: 75%;
+  }
+}

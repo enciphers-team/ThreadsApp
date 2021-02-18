@@ -1,0 +1,94 @@
+.manage {
+  margin-left: 20%;
+  padding: 1rem;
+  margin-bottom: 20rem;
+
+  h3 {
+    color: var(--color-primary);
+    font-size: 4rem;
+    margin-top: 2rem;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid black;
+      border-top: 1px solid black;
+    }
+
+    &__number {
+      width: 10%;
+    }
+
+    &__name {
+      width: 20%;
+    }
+
+    &__email {
+      width: 50%;
+    }
+
+    &__status {
+      width: 10%;
+    }
+
+    &__action {
+      width: 20%;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid black;
+    }
+
+    &__number {
+      width: 10%;
+    }
+
+    &__name {
+      width: 20%;
+    }
+
+    &__email {
+      width: 50%;
+    }
+
+    &__status {
+      width: 10%;
+      &__icon {
+        color: green;
+        margin-right: 1rem;
+      }
+    }
+
+    &__action {
+      width: 20%;
+
+      &__container {
+        cursor: pointer;
+      }
+      &__icon {
+        color: red;
+      }
+    }
+  }
+}

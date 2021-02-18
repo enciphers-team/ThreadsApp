@@ -1,0 +1,73 @@
+.auth {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to bottom right, #30a9de, #1977a0);
+
+  &__container {
+    position: absolute;
+    height: 85%;
+    width: 30%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+   
+    
+    @media only screen and (max-width: 900px) {
+      width: 40%;
+    }
+
+    @media only screen and (max-width: 650px) {
+      width: 50%;
+    }
+
+
+    @media only screen and (max-width: 450px) {
+      width: 90%;
+    }
+  }
+  &__register,
+  &__login {
+    img {
+      height: 12rem;
+      width: 10rem;
+      display: block;
+      margin: auto;
+    }
+
+    a {
+      font-size: 1.3rem;
+      display: block;
+      margin-top: 2rem;
+      margin-left: 2rem;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  &__button {
+    margin: auto;
+    display: block;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    background-image: linear-gradient(to right bottom, #30a9de, #1977a0);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 400;
+    color: var(--color-primary);
+  }
+}

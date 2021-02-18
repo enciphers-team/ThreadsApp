@@ -1,0 +1,8 @@
+.home {
+  display: flex;
+  justify-content: space-between;
+  &__right {
+    width: 20%;
+    margin-right: 5%;
+  }
+}

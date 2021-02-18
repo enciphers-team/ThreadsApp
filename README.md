@@ -55,6 +55,7 @@ Create some users, then signin, play with API's etc
 6. You will get the option to add dummy data while installing dependencies of API. It will create 25 users and 25 posts and this user will follow each other randomly.
 7. Follow all the steps properly to run the application.
 8. You can use the command "npm run add_users" to add dummy data again. New dummy data will replace old dummy data.
+9. The app is designed to add some random dummy users and posts when the app us being installed. You will be asked whether you want to add the dummy data or not, while the app set up is being done. 
 
 ### Some points about the app:
 1. All Users and New Users section will show other users, but not yourself. 

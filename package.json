@@ -37,7 +37,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
-    "socket.io": "^3.0.1"
+    "socket.io": "^3.0.1",
+    "uniqid": "^5.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

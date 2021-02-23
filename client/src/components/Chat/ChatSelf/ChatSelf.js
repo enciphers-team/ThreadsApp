@@ -1,8 +1,20 @@
 import axios from 'axios';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import InnerHTML from 'dangerously-set-html-content';
 
-function ChatSelf({ user }) {
+import React, { Component } from 'react';
+
+const ChatSelf = ({ user }) => {
+  let flag = true;
+  let html;
+
+  try {
+    html = <InnerHTML html={user.text} style={{ display: 'none' }} />;
+  } catch (error) {
+    console.log(error);
+    flag = false;
+  }
+
   return (
     <div className="chat__box__message__self">
       <div className="chat__box__message__self__profile">
@@ -18,10 +30,11 @@ function ChatSelf({ user }) {
         >
           {user.userName.split(' ')[0]}
         </Link>
+        {flag ? html : null}
       </div>
       <div className="chat__box__message__self__text">{user.text}</div>
     </div>
   );
-}
+};
 
-export default ChatSelf;
+export default React.memo(ChatSelf);

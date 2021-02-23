@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const uniqueId = require('uniqid');
 
 // var cors = require('cors');
 // app.use(cors());
@@ -92,6 +93,7 @@ io.on('connection', (socket) => {
     data = {
       ...data,
       id: user._id,
+      uniqueId: uniqueId(),
     };
     console.log(data);
     io.emit('send_message_to_all', data);

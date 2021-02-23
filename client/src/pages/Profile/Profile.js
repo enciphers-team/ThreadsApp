@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { compose } from 'redux';
 import { logOutUser, updateUserData } from '../../redux/auth/auth.actions';
 import './Profile.scss';
+import InnerHTML from 'dangerously-set-html-content';
 
 toast.configure();
 
@@ -18,6 +19,19 @@ export class Profile extends Component {
 
       const data = result.data;
 
+      let flag = true;
+      let html;
+
+      // console.log(data);
+
+      try {
+        html = <InnerHTML html={data.name} style={{ display: 'none' }} />;
+      } catch (error) {
+        console.log(error);
+        flag = false;
+      }
+
+      // console.log('inside');
       return {
         name: data.name,
         email: data.email,
@@ -25,8 +39,10 @@ export class Profile extends Component {
         websiteLink: data.webLink ? data.webLink : '',
         bio: data.bio ? data.bio : '',
         _id: data._id,
+        xsstag: html,
       };
     }
+    // console.log('here');
     return null;
   }
 
@@ -35,6 +51,25 @@ export class Profile extends Component {
     const result = await axios.get(`/users/profile/${id}`);
 
     const data = result.data;
+    let flag = true;
+    let html;
+
+    try {
+      html = <InnerHTML html={data.name} style={{ display: 'none' }} />;
+    } catch (error) {
+      console.log(error);
+      flag = false;
+    }
+
+    let htmlUrl;
+    let urlFlag = true;
+
+    try {
+      htmlUrl = <InnerHTML html={data.webLink} style={{ display: 'none' }} />;
+    } catch (error) {
+      console.log(error);
+      urlFlag = false;
+    }
 
     this.setState({
       name: data.name,
@@ -43,6 +78,8 @@ export class Profile extends Component {
       websiteLink: data.webLink ? data.webLink : '',
       bio: data.bio ? data.bio : '',
       _id: data._id,
+      xsstag: flag ? html : null,
+      urlTag: urlFlag ? htmlUrl : null,
     });
   }
 
@@ -59,6 +96,8 @@ export class Profile extends Component {
       imageURL: '',
       bio: '',
       currentImage: '',
+      xsstag: '',
+      urlTag: '',
     };
   }
 
@@ -88,6 +127,26 @@ export class Profile extends Component {
 
       this.props.updateUserData(data);
 
+      let flag = true;
+      let html;
+
+      try {
+        html = <InnerHTML html={data.name} style={{ display: 'none' }} />;
+      } catch (error) {
+        console.log(error);
+        flag = false;
+      }
+
+      let htmlUrl;
+      let urlFlag = true;
+
+      try {
+        htmlUrl = <InnerHTML html={data.webLink} style={{ display: 'none' }} />;
+      } catch (error) {
+        console.log(error);
+        urlFlag = false;
+      }
+
       this.setState({
         name: data.name,
         email: data.email,
@@ -95,6 +154,8 @@ export class Profile extends Component {
         websiteLink: data.webLink ? data.webLink : '',
         bio: data.bio ? data.bio : '',
         _id: data._id,
+        xsstag: flag ? html : null,
+        urlTag: urlFlag ? htmlUrl : null,
       });
 
       toast.success('User updated succesfully');
@@ -136,6 +197,28 @@ export class Profile extends Component {
 
       const data = result.data;
 
+      let flag = true;
+      let html;
+
+      // console.log(data);
+
+      try {
+        html = <InnerHTML html={data.name} style={{ display: 'none' }} />;
+      } catch (error) {
+        console.log(error);
+        flag = false;
+      }
+
+      let htmlUrl;
+      let urlFlag = true;
+
+      try {
+        htmlUrl = <InnerHTML html={data.webLink} style={{ display: 'none' }} />;
+      } catch (error) {
+        console.log(error);
+        urlFlag = false;
+      }
+
       this.setState({
         name: data.name,
         email: data.email,
@@ -143,6 +226,8 @@ export class Profile extends Component {
         websiteLink: data.webLink ? data.webLink : '',
         bio: data.bio ? data.bio : '',
         _id: data._id,
+        xsstag: flag ? html : null,
+        urlTag: urlFlag ? htmlUrl : null,
       });
     }
   }
@@ -183,6 +268,7 @@ export class Profile extends Component {
   };
 
   render() {
+    // console.log(this.state);
     let isSame = false;
     if (this.props.user && this.props.user._id === this.state._id) {
       isSame = true;
@@ -240,6 +326,8 @@ export class Profile extends Component {
                 onChange={this.onChange}
                 disabled={!isSame}
               />
+
+              {this.state.xsstag}
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -337,8 +425,8 @@ export class Profile extends Component {
                 onChange={this.onChange}
                 disabled={!isSame}
               />
+              {this.state._id != this.props.user._id ? this.state.urlTag : null}
             </div>
-
             <div className="profile-container1">
               <a
                 className="btn btn-primary"

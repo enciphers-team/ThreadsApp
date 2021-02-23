@@ -28,6 +28,7 @@ class Chat extends Component {
     this.state.socket.on('send_message_to_all', (data) => {
       const newMessages = [...this.state.messageList];
       newMessages.push(data);
+      console.log(data);
 
       this.setState({ messageList: newMessages, text: '' });
     });
@@ -48,6 +49,18 @@ class Chat extends Component {
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  hashCode(str) {
+    var hash = 0,
+      i,
+      chr;
+    for (i = 0; i < str.length; i++) {
+      chr = str.charCodeAt(i);
+      hash = (hash << 5) - hash + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  }
 
   render() {
     return (
@@ -79,11 +92,11 @@ class Chat extends Component {
             </div>
           </div>
           <div className="chat__box__message">
-            {this.state.messageList.map((user) => {
+            {this.state.messageList.map((user, index) => {
               if (user.email === this.props.user.email) {
-                return <ChatSelf key={uniqueId()} user={user} />;
+                return <ChatSelf key={user.uniqueId} user={user} />;
               } else {
-                return <ChatFriend key={uniqueId()} user={user} />;
+                return <ChatFriend key={user.uniqueId} user={user} />;
               }
             })}
           </div>

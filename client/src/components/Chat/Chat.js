@@ -11,7 +11,7 @@ class Chat extends Component {
     super();
     this.state = {
       isOpen: false,
-      socket: openSocket('http://localhost:4000'),
+      socket: openSocket(process.env.REACT_APP_API_BASE_URL),
       text: '',
       messageList: [],
       socketChanged: false,
@@ -23,7 +23,6 @@ class Chat extends Component {
   };
 
   componentDidMount() {
-    const socket = openSocket('http://localhost:4000');
 
     this.state.socket.on('send_message_to_all', (data) => {
       const newMessages = [...this.state.messageList];

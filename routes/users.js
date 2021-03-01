@@ -7,8 +7,8 @@ const user = require('../models/user');
 router.get('/profile/:id', usersController.profile);
 
 router.post(
-  '/update/:id',
-  usersController.isAuth,
+  '/update',
+  // usersController.isAuth,
   upload,
   usersController.update
 );

@@ -72,92 +72,90 @@ module.exports.profile = function (req, res) {
 };
 
 module.exports.update = async function (req, res) {
-  if (req.user.id == req.params.id) {
-    try {
-      let user = await User.findById(req.params.id);
+  try {
+    let user = await User.findById(req.body.userId);
 
-      // TODO: SSRF Challenge (URL UPLOAD)
-      if (req.body.imageURL) {
-        const url = req.body.imageURL;
-        // const command = 'curl ' + url;
-        let fileName = 'r' + user.name + Date.now();
-        fileName = fileName.replace(/ /g, '');
-        //
-        //
-        exec(
-          // `sh ${__dirname}/../curl.sh ` + url + ' ' + fileName,
-          `curl -o ${__dirname}/../uploads/${fileName} ${url}`,
-          { maxBuffer: 1024 * 1024 * 10 },
-          async (err, stdout, stderr) => {
-            if (err) {
-              //some err occurred
+    // TODO: SSRF Challenge (URL UPLOAD)
+    if (req.body.imageURL) {
+      const url = req.body.imageURL;
+      // const command = 'curl ' + url;
+      let fileName = 'r' + user.name + Date.now();
+      fileName = fileName.replace(/ /g, '');
+      //
+      //
+      exec(
+        // `sh ${__dirname}/../curl.sh ` + url + ' ' + fileName,
+        `curl -o ${__dirname}/../uploads/${fileName} ${url}`,
+        { maxBuffer: 1024 * 1024 * 10 },
+        async (err, stdout, stderr) => {
+          if (err) {
+            //some err occurred
 
-              return res.status(400).json({
-                message: 'Internal Server Error! Try again ',
-              });
-            } else {
-              const xyz = '/uploads' + '/' + fileName;
+            return res.status(400).json({
+              message: 'Internal Server Error! Try again ',
+            });
+          } else {
+            const xyz = '/uploads' + '/' + fileName;
 
-              user.profileImage = '/uploads' + '/' + fileName;
+            user.profileImage = '/uploads' + '/' + fileName;
 
-              if (req.body.password) {
-                user.password = req.body.password;
-              }
-              if (req.body.websiteLink) {
-                user.webLink = req.body.websiteLink;
-              }
-
-              if (req.body.bio) {
-                user.bio = req.body.bio;
-              }
-
-              if (req.body.name) {
-                user.name = req.body.name;
-              }
-
-              await user.save();
-              return res.json(user);
+            if (req.body.password) {
+              user.password = req.body.password;
             }
-          }
-        );
-      } else {
-        if (req.body.password != req.body.confirm_password) {
-          res.status(401).json({ message: 'Check Confirm Password' });
-        }
-        if (req.body.websiteLink) {
-          user.webLink = req.body.websiteLink;
-        }
-        if (req.body.password) {
-          user.password = req.body.password;
-        }
+            if (req.body.websiteLink) {
+              user.webLink = req.body.websiteLink;
+            }
 
-        if (user.name) {
-          if (req.body.name) {
-            user.name = req.body.name;
+            if (req.body.bio) {
+              user.bio = req.body.bio;
+            }
+
+            if (req.body.name) {
+              user.name = req.body.name;
+            }
+
+            await user.save();
+            return res.json(user);
           }
         }
-
-        if (req.body.bio) {
-          user.bio = req.body.bio;
-        }
-        if (req.file) {
-          const filelocation = '/uploads' + '/' + req.file.filename;
-          user.profileImage = filelocation;
-        }
-
-        await user.save();
-        return res.status(200).json(user);
+      );
+    } else {
+      if (req.body.password != req.body.confirm_password) {
+        res.status(401).json({ message: 'Check Confirm Password' });
       }
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({
-        message: 'Internal Server Error! Try again ',
-      });
+      if (req.body.websiteLink) {
+        user.webLink = req.body.websiteLink;
+      }
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      if (user.name) {
+        if (req.body.name) {
+          user.name = req.body.name;
+        }
+      }
+
+      if (req.body.bio) {
+        user.bio = req.body.bio;
+      }
+      if (req.file) {
+        const filelocation = '/uploads' + '/' + req.file.filename;
+        user.profileImage = filelocation;
+      }
+
+      await user.save();
+      return res.status(200).json(user);
     }
-  } else {
-    res.status(401).send('Unauthorized');
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      message: 'Internal Server Error! Try again ',
+    });
   }
 };
+
+/**************************************** */
 
 module.exports.signIn = async function (req, res) {
   try {
@@ -208,7 +206,6 @@ module.exports.signIn = async function (req, res) {
 // get the sign up data
 module.exports.create = async function (req, res) {
   try {
-
     if (req.body.password != req.body.passwordConfirm) {
       return res.status(401).json({
         message: 'Confirm password should be same',

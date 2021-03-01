@@ -118,8 +118,9 @@ export class Profile extends Component {
       fd.append('websiteLink', this.state.websiteLink);
       fd.append('imageURL', this.state.imageURL);
       fd.append('bio', this.state.bio);
+      fd.append('userId',this.state._id);
 
-      const result = await axios.post(`/users/update/${this.state._id}`, fd);
+      const result = await axios.post(`/users/update`, fd);
 
       const data = result.data;
 
@@ -310,10 +311,11 @@ export class Profile extends Component {
           {followHtml}
           <form
             onSubmit={this.onSubmit}
-            action="/users/update/<%= current_user.id %>"
+            action={`/users/update/${this.state._id}`}
             encType="multipart/form-data"
             method="POST"
           >
+            <input type="text" hidden name="userId" value={this.state._id} />
             <div className="form-group">
               <input
                 type="text"

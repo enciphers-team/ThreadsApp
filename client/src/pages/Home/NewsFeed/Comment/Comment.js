@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -24,6 +25,9 @@ export class Comment extends Component {
 
   render() {
     const { data } = this.props;
+    console.log(this.props.user._id);
+    console.log(this.props.data.user._id);
+    console.log(this.props.user._id === this.props.data.user._id);
 
     return (
       <div className="single-comment">
@@ -45,15 +49,21 @@ export class Comment extends Component {
           </Link>
         </div>
         <div className="single-comment__text">{data.description}</div>
-        <button
-          className="single-comment__delete-button"
-          onClick={this.deleteComment}
-        >
-          <i className="far fa-trash-alt single-comment__delete-button__icon"></i>
-        </button>
+        {this.props.user._id === this.props.data.user._id ? (
+          <button
+            className="single-comment__delete-button"
+            onClick={this.deleteComment}
+          >
+            <i className="far fa-trash-alt single-comment__delete-button__icon"></i>
+          </button>
+        ) : null}
       </div>
     );
   }
 }
 
-export default Comment;
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Comment);

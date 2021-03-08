@@ -22,8 +22,8 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 3) Open the "config.env" file and fill in the required information given in the file. The application won't run if all information is not filled in. For the AWS s3 bucket, you need to create the account on AWS and create the s3 bucket and fill the ACCESSKEYID, SECRETACCESSKEY, REGION, BUCKET_NAME values of your account.
 4) Run the command "npm install" in the "Threads" folder to install all dependencies required for API.
 5) Run the command "npm run client_install" to install all dependencies of react app.
-5) Go to the client folder and open the ".env" file. Fill in the required information in the file. The port in the value of the variable "REACT_APP_API_BASE_URL"  should be equal to the value of "PORT" in the "config.env" file of the Threads folder.
-6) Run the command "npm start" to start the application. The application will run on "http://localhost:3000/".Here "3000" is the value of the "PORT" provides the ".env" file in the client folder. So you need to replace the value of "3000" with the value of "PORT" in the ".env" file of the client.
+   Note: If above steps does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually.
+8) Run the command "npm start" to start the application. The application will run on "http://localhost:3000/".Here "3000" is the value of the "PORT" provides the ".env" file in the client folder. So you need to replace the value of "3000" with the value of "PORT" in the ".env" file of the client.
 "3000" is the default value of "PORT".
 ```
 

@@ -23,7 +23,7 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 4) Run the command "npm install" in the "Threads" folder to install all dependencies required for API.
 5) Run the command "npm run client_install" to install all dependencies of react app.
    Note: If above steps does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually.
-8) Run the command "npm start" to start the application. The application will run on "http://localhost:3000/".Here "3000" is the value of the "PORT" provides the ".env" file in the client folder. So you need to replace the value of "3000" with the value of "PORT" in the ".env" file of the client.
+6) Run the command "npm start" to start the application. The application will run on "http://localhost:3000/".Here "3000" is the value of the "PORT" provides the ".env" file in the client folder. So you need to replace the value of "3000" with the value of "PORT" in the ".env" file of the client.
 "3000" is the default value of "PORT".
 ```
 

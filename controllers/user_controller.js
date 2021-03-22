@@ -157,36 +157,45 @@ module.exports.update = async function (req, res) {
 
 /**************************************** */
 
-module.exports.signIn = async function (req, res) {
+function IsJsonString(str) {
   try {
-    const user = await User.findOne({ email: req.body.email });
-
-    // if(!req.body.password || (req.body.password.length))
-
-    if (user && user.password != req.body.password) {
-      return res.status(401).json({
-        message: 'Password Incorrect',
-      });
-    }
-
-    if (!user || user.password != req.body.password) {
-      return res.status(401).json({
-        message: 'Incorrect Email',
-      });
-    }
-    const email = user.email;
-    return res.json(200, {
-      message: 'Account created Succesfully',
-      token: jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: '86400000',
-      }),
-      user,
-    });
-  } catch (error) {
-    return res.json(500, {
-      message: 'Internal Server Error! Try later',
-    });
+    JSON.parse(str);
+  } catch (e) {
+    return false;
   }
+  return true;
+}
+
+module.exports.signIn = async function (req, res) {
+  User.findOne(
+    {
+      email: IsJsonString(req.body.email)
+        ? JSON.parse(req.body.email)
+        : req.body.email,
+      password: IsJsonString(req.body.password)
+        ? JSON.parse(req.body.password)
+        : req.body.password,
+    },
+    function (err, user) {
+      if (err) {
+        return res.json(500, {
+          message: 'Internal server error! Try later',
+        });
+      } else if (user) {
+        return res.json({
+          message: 'Account created Succesfully',
+          token: jwt.sign({ _id: user._id }, JWT_SECRET, {
+            expiresIn: '86400000',
+          }),
+          user,
+        });
+      } else {
+        return res.status(500).json({
+          message: 'Invalid email or password',
+        });
+      }
+    }
+  );
 };
 
 // module.exports.signIn = function (req, res) {

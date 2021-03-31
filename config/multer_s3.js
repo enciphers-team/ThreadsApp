@@ -45,14 +45,14 @@ const middleware = function (req, res, next) {
       }
 
       // req.flash('error', 'Something went wrong try again');
-      console.log('---------------------', err);
+      console.log(err);
 
       return res.status(400).json({
         message: 'Something went wrong in uploading images! Try again',
       });
     } else if (err) {
       // req.flash('error', 'Something went wrong try again');
-      console.log('******************************', err);
+      console.log(err);
       return res.status(400).json({
         message: 'Something went wrong in uploading images! Try again',
       });

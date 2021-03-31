@@ -17,6 +17,17 @@ const User = require('./models/user');
 
 // app.use(express.urlencoded());
 
+process.env.ACCESSKEYID =
+  process.env.ACCESSKEYID.length == 0 ? undefined : process.env.ACCESSKEYID;
+process.env.SECRETACCESSKEY =
+  process.env.SECRETACCESSKEY.length == 0
+    ? undefined
+    : process.env.SECRETACCESSKEY;
+process.env.REGION =
+  process.env.REGION.length == 0 ? undefined : process.env.REGION;
+process.env.BUCKET_NAME =
+  process.env.BUCKET_NAME.length == 0 ? undefined : process.env.BUCKET_NAME;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

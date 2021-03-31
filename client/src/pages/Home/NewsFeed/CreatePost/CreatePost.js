@@ -45,7 +45,18 @@ class CreatePost extends Component {
       );
       toast.success('Post created successfully');
     } catch (error) {
-      if (error.response.data.message) {
+      this.setState(
+        { content: '', url: '', file: '', selectedUser: [] },
+        () => {
+          this.setState({ isLoading: false });
+        }
+      );
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         toast.error(error.response.data.message);
       } else {
         toast.error('Something went wrong! Try again');

@@ -20,8 +20,9 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 1) Run the command "git clone https://github.com/enciphers/ThreadsApp.git"
 2) cd Threads
 3) Open the "config.env" file and fill in the required information given in the file. The application won't run if all information is not filled in. For the AWS s3 bucket, you need to create an account on AWS and create a s3 bucket, then fill the ACCESSKEYID, SECRETACCESSKEY, REGION, BUCKET_NAME values of your account in the env file.
-4) Run the command "npm install" in the "Threads" folder to install all dependencies required for API.
-5) Run the command "npm run client_install" to install all dependencies of react app.
+4) MongoDB database is used in the application.MongoDB database should be configured properly and should be running. Otherwise, the app won't run.
+5) Run the command "npm install" in the "Threads" folder to install all dependencies required for API.
+6) Run the command "npm run client_install" to install all dependencies of react app.
    Note: If above steps does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually.
 6) Run the command "npm start" to start the application. The application will run on "http://localhost:4000/". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "4000" is the default value of "PORT".
 ```

@@ -64,7 +64,7 @@ if that's not the case, create an [issue](https://github.com/enciphers/ThreadsAp
 ### NOTE:
 
 1. Filling all information in both environment files is necessary to run the app.
-2. Admin email address is "[admin@threadsapp.co.in](mailto:admin@threadsapp.co.in)". There is a hidden page, which is only accessible to admin user. Try finding this :-) 
+2. Admin email address is `admin@threadsapp.co.in`, create an account using this email and this account will become admin account. There is a hidden page, which is only accessible to admin user. Try finding this :-) 
 3. For the AWS s3 bucket, you need to fill correct information in the "config.env" file.
 4. User profile pictures are saved in the "uploads" folder.
 5. Post pictures are uploaded on s3 bucket.

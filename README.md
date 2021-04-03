@@ -1,11 +1,14 @@
-Threads
+# ThreadsApp 
+
+
+
 
 ## Prerequisite for setting up the Lab
 
 1. Install Node.js for your system
 
 ```
-# Check these commands
+# Check these commands to verify if node is installed:
 node -v
 npm -v
 ```
@@ -17,15 +20,20 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 ## Setting Up the project
 
 ```
-1) Run the command "git clone https://github.com/enciphers/ThreadsApp.git"
-2) cd Threads
-3) Open the "config.env" file and fill in the required information given in the file. The application won't run if all information is not filled in. For the AWS s3 bucket, you need to create an account on AWS and create a s3 bucket, then fill the ACCESSKEYID, SECRETACCESSKEY, REGION, BUCKET_NAME values of your account in the env file.Here "PORT" value is the port where the Nodejs backend application is running.The default value of the "PORT" is "4000".
-4) The ".env" file exists in the "client" folder. In the ".env" file, the "PORT" value is the port where the front-end react application is running.The default value of "PORT" is "3000".
-5) The ".env" file exists in the "client" folder. In the ".env" file, the value of "REACT_APP_API_BASE_URL" is the URL of the backend API. Here the value of port is the value of "PORT" in the "config.env" file. The default value of the port is "4000".
-6) MongoDB database is used in the application.MongoDB database should be configured properly and should be running. Otherwise, the app won't run.
-7) Run the command "npm install" in the "Threads" folder to install all dependencies required for API.Note: If above steps does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually.
-8) Run the command "npm run client_install" to install all dependencies of react app.
-9) Run the command "npm start" to start the application. The application will run on "http://localhost:3000". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "3000" is the default value of "PORT".
+1) Run the command "git clone https://github.com/enciphers/ThreadsApp.git" to clone the repo locally.
+2) Navigate to the downloaded folder `cd ThreadsApp`
+3) Open the "config.env" file and fill in the required information given in the file.  
+4) As some part of the application uses a S3 bucket, this needs to be created and configured properly. To setup this, create a s3 bucket on your AWS account, then fill the ACCESSKEYID, SECRETACCESSKEY, REGION, BUCKET_NAME values of your account in the env file. 
+5) The value of "PORT" is the port number where the Nodejs backend application is running. The default value of the "PORT" is "4000".
+6) The ".env" file exists in the "client" folder. In the ".env" file, the "PORT" value is the port where the front-end react application is running.The default value of `PORT` is "3000".
+7) The `.env` file exists in the "client" folder. In the `.env` file, the value of "REACT_APP_API_BASE_URL" is the URL of the backend API & "PORT" is the port number for frontend.
+8) MongoDB is used by the application hence it should be configured properly and should be running before you install/run the application.
+9) Run the command "npm install" in the "ThreadsApp" folder to install all dependencies required for API. 
+
+`Note:` _The application should ask to autofill the database with some dummy data. If the above step does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually, after the install is done._
+
+11) Run the command "npm run client_install" to install all dependencies of react app.
+12) Run the command "npm start" to start the application. The application will run on "http://localhost:3000". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "3000" is the default value of "PORT".
 ```
 
 ## Starting the Project
@@ -34,33 +42,29 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 npm start
 ```
 
-You should see a message `Connected to Moongose` in the terminal, if that's the case then the project setup is done and all the prerequisite were installed properly
-if that's not the case, create an issue with the error and screenshot.
+You should see a message `Connected to Moongose`, if that's the case then the project setup is done and all the prerequisite are installed properly
+if that's not the case, create an [issue](https://github.com/enciphers/ThreadsApp/issues) with the error and screenshot.
 
 #### Using the application
 
 ```
-Visit --> http://localhost:3000/home
-Here "3000" is the value of the "PORT" provides the ".env" file in the client folder. So you need to replace the value of "3000" with the value of "PORT" in the ".env" file of the client.
-"3000" is the default value of "PORT".
-Create some users, then signin, play with API's etc
+- Visit --> http://localhost:3000/home
+- Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
+- "3000" is the default value of "PORT".
+- Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
 ```
 
 ### NOTE:
 
 1. Filling all information in both environment files is necessary to run the app.
-2. Admin email address is "[admin@threadsapp.co.in](mailto:admin@threadsapp.co.in)". You can visit "http://localhost:3000/management" for the admin page.
+2. Admin email address is "[admin@threadsapp.co.in](mailto:admin@threadsapp.co.in)". There is a hidden page, which is only accessible to admin user. Try finding this :-) 
 3. For the AWS s3 bucket, you need to fill correct information in the "config.env" file.
 4. User profile pictures are saved in the "uploads" folder.
 5. Post pictures are uploaded on s3 bucket.
-6. You will get the option to add dummy data while installing dependencies of API. It will create 25 users and 25 posts and this user will follow each other randomly.
-7. Follow all the steps properly to run the application.
-8. You can use the command "npm run add_users" to add dummy data again. New dummy data will replace old dummy data.
-9. The app is designed to add some random dummy users and posts when the app us being installed. You will be asked whether you want to add the dummy data or not, while the app set up is being done. 
-
-### Some points about the app:
-1. All Users and New Users section will show other users, but not yourself. 
-2. Want to use a live version of the app {Hosted by Enciphers}, for training? Drop us an email at training@enciphers.com
+6. You will get the option to add dummy data while installing dependencies of API. It will create 25 users and 25 posts and these users will follow each other randomly.
+7. You can use the command "npm run add_users" to add dummy data again. New dummy data will replace old dummy data.
+8. All Users and New Users section will show other users, but not yourself. 
+9. Want to use a live version of the app {Hosted by Enciphers}, for training? Drop us an email at `training@enciphers.com`
 
 
 ### Some Screenshots

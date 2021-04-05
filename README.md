@@ -72,7 +72,7 @@ if that's not the case, create an [issue](https://github.com/enciphers/ThreadsAp
 7. You can use the command "npm run add_users" to add dummy data again. New dummy data will replace old dummy data.
 8. All Users and New Users section will show other users, but not yourself. 
 9. Want to use a live version of the app {Hosted by Enciphers}, for training? Drop us an email at `training@enciphers.com`
-10. Have you discovered more vulnerabilities in the app than the listed one [here](https://enciphers.github.io/ThreadsApp-Web/)? Drop us an email at `training@enciphers.com` and you may end up getting some cool swag if the app is super cool :-) 
+10. Have you discovered more vulnerabilities in the app than the listed one [here](http://info.threadsapp.co.in/)? Drop us an email at `training@enciphers.com` and you may end up getting some cool swag if the vulnerability is super cool (High/Critical severity) :-) 
 
 
 ### Some Screenshots

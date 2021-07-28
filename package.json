@@ -14,7 +14,7 @@
   "author": "enciphers",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.781.0",
+    "aws-sdk": "^2.858.0",
     "axios": "^0.21.1",
     "concurrently": "^5.3.0",
     "connect-flash": "^0.1.1",

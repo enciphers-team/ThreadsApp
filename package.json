@@ -9,7 +9,8 @@
     "postinstall": "npm run add_users",
     "client": "cd client && npm start",
     "client_install": "cd client && npm install",
-    "start": "concurrently -n 'server,client' -c 'red,blue' \"nodemon server.js\" \"npm run client\""
+    "start": "concurrently -n 'server,client' -c 'red,blue' \"nodemon server.js\" \"npm run client\"",
+    "install_all": "npm install && npm run client_install"
   },
   "author": "enciphers",
   "license": "ISC",
@@ -18,7 +19,7 @@
     "axios": "^0.21.1",
     "concurrently": "^5.3.0",
     "connect-flash": "^0.1.1",
-    "connect-mongo": "^3.2.0",
+    "connect-mongo": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
@@ -27,7 +28,7 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.4",
+    "mongoose": "^7.4.2",
     "mongoose-deep-populate": "^3.2.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",

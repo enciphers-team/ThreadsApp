@@ -60,11 +60,14 @@ module.exports.isAuth = async (req, res, next) => {
   }
 };
 
-module.exports.profile = function (req, res) {
+module.exports.profile = async function (req, res) {
   try {
-    User.findById(req.params.id, function (err, user) {
-      return res.json(user);
-    });
+    const user = await User.findById(req.params.id);
+    if(user) {
+      return res.status(200).json(user);
+    } else {
+      res.status(404).send({ message: 'Could not find user with id' });
+    }
   } catch (error) {
     console.log(error);
     res.status(400).send({ message: 'something went wrong' });
@@ -115,7 +118,7 @@ module.exports.update = async function (req, res) {
             }
 
             await user.save();
-            return res.json(user);
+            return res.status(200).json(user);
           }
         }
       );
@@ -167,35 +170,34 @@ function IsJsonString(str) {
 }
 
 module.exports.signIn = async function (req, res) {
-  User.findOne(
-    {
+  try {
+    const user = await User.findOne({
       email: IsJsonString(req.body.email)
         ? JSON.parse(req.body.email)
         : req.body.email,
       password: IsJsonString(req.body.password)
         ? JSON.parse(req.body.password)
         : req.body.password,
-    },
-    function (err, user) {
-      if (err) {
-        return res.json(500, {
-          message: 'Internal server error! Try later',
-        });
-      } else if (user) {
-        return res.json({
-          message: 'Account created Succesfully',
-          token: jwt.sign({ _id: user._id }, JWT_SECRET, {
-            expiresIn: '86400000',
-          }),
-          user,
-        });
-      } else {
-        return res.status(500).json({
-          message: 'Invalid email or password',
-        });
-      }
+    });
+
+    if (user) {
+      return res.status(200).json({
+        message: 'Account created Succesfully',
+        token: jwt.sign({ _id: user._id }, JWT_SECRET, {
+          expiresIn: '86400000',
+        }),
+        user,
+      });
+    } else {
+      return res.status(500).json({
+        message: 'Invalid email or password',
+      });
     }
-  );
+  } catch {
+    return res.status(500).json({
+      message: 'Internal server error! Try later',
+    });
+  }
 };
 
 // module.exports.signIn = function (req, res) {
@@ -220,32 +222,32 @@ module.exports.create = async function (req, res) {
         message: 'Confirm password should be same',
       });
     }
-    //
-    User.findOne({ email: req.body.email }, function (err, user) {
-      if (user) {
-        return res.status(401).json({
-          message: 'User already exist with given email',
+  
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res.status(401).json({
+        message: 'User already exist with given email',
+      });
+    } else {
+      try {
+        const newUser = await User.create(req.body);
+        
+        return res.status(200).json({
+          message: 'Account created Succesfully',
+          token: jwt.sign({ _id: newUser._id }, JWT_SECRET, {
+            expiresIn: '86400000',
+          }),
+          user: newUser,
         });
-      }
+      } catch(error) {
+        console.log(error);
+        return res.json(500, {
+          message: 'All fields are required',
+          error
+        });
 
-      if (!user) {
-        User.create(req.body, (err, user) => {
-          if (err) {
-            return res.json(500, {
-              message: 'All fields are required',
-            });
-          } else {
-            return res.json(200, {
-              message: 'Account created Succesfully',
-              token: jwt.sign({ _id: user._id }, JWT_SECRET, {
-                expiresIn: '86400000',
-              }),
-              user,
-            });
-          }
-        });
       }
-    });
+    }
   } catch (error) {
     console.log(error);
     return res.json(500, {
@@ -287,7 +289,7 @@ module.exports.deleteAccount = async (req, res) => {
     });
     const deleteLike = await Like.deleteMany({ user: id });
     const deleteAccountResult = await User.deleteOne({ _id: id });
-    return res.json({ message: 'Account delete sucessfully' });
+    return res.status(200).json({ message: 'Account delete sucessfully' });
   } catch (error) {
     console.log(error);
     req.flash('error', 'Something went wrong in deleteing account! Try again');
@@ -341,7 +343,7 @@ module.exports.followUser = async (req, res) => {
 
     const user = await getSingleUser(req.user.id);
 
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -367,7 +369,7 @@ module.exports.unFollowUser = async (req, res) => {
 
     const user = await getSingleUser(req.user.id);
     const followingUser = await getFollowing(req.user.id);
-    return res.json({ user, followingUser });
+    return res.status(200).json({ user, followingUser });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -380,7 +382,7 @@ module.exports.getFollowers = async (req, res) => {
   try {
     const userId = req.params.userId;
     const user = await User.findOne({ _id: userId }).populate('follower');
-    return res.json({
+    return res.status(200).json({
       users: user.follower,
       title: `${user.name} followers`,
     });
@@ -396,7 +398,7 @@ module.exports.getFollowing = async (req, res) => {
   try {
     const userId = req.params.userId;
     const user = await User.findOne({ _id: userId }).populate('following');
-    res.json({
+    res.status(200).json({
       users: user.following,
       title: `${user.name} followings`,
     });
@@ -449,18 +451,18 @@ module.exports.manage = async (req, res) => {
     if (email === 'admin@threadsapp.co.in') {
       const users = await User.find({});
       if (users) {
-        return res.json(200, {
+        return res.status(200).json({
           message: 'Here are all the users',
           users: users,
         });
       }
     }
-    return res.json(401, {
+    return res.status(401).json({
       message: 'Not authorized, try again :)',
     });
   } catch (error) {
     console.log(error);
-    return res.json(500, {
+    return res.status(500).json({
       message: 'Internal Server Error',
     });
   }
@@ -481,18 +483,18 @@ module.exports.deleteUserManagement = async (req, res) => {
       }
       await deleteUser(user._id);
       const allUsers = await getAllUsers();
-      return res.json({
+      return res.status(200).json({
         message: 'User Deleted',
         users: allUsers,
       });
     } else {
-      return res.json(401, {
+      return res.status(401).json({
         message: 'Something went wrong',
       });
     }
   } catch (error) {
     console.log(error);
-    return res.json(500, {
+    return res.status(500).json({
       message: 'Internal Server Error',
     });
   }

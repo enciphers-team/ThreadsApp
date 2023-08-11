@@ -3,65 +3,70 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const { getAllPosts } = require('./utils');
 
-module.exports.createComment = (req, res) => {
-  Post.findById(req.body.post_value, (err, post) => {
+module.exports.createComment = async (req, res) => {
+  try {
+    if (req.body.description && req.body.description.length > 200) {
+      return res
+        .status(400)
+        .json({ message: 'Comment should be smaller than 200 character' });
+    }
+
+    if (!req.body.description || req.body.description.length == 0) {
+      return res.status(400).json({ message: "Comment shouldn't be empty" });
+    }
+
+    const post = await Post.findById(req.body.post_value);
+
     if (post) {
-      if (req.body.description && req.body.description.length > 200) {
-        return res
-          .status(400)
-          .json({ message: 'Comment should be smaller than 200 character' });
-      }
-
-      if (!req.body.description || req.body.description.length == 0) {
-        return res.status(400).json({ message: "Comment shouldn't be empty" });
-      }
-
-      Comment.create(
+      const comment = await Comment.create(
         {
           description: req.body.description,
           post: req.body.post_value,
           user: req.user._id,
-        },
-        async (err, comment) => {
-          if (err) {
-            console.log(err);
-            return res
-              .status(400)
-              .json({ message: 'Something went wrong in adding comment!' });
-          } else {
-            await post.comments.push(comment);
-            await post.save();
-            const allPost = await getAllPosts();
-            return res.json(allPost);
-          }
         }
       );
+      await post.comments.push(comment);
+      await post.save();
+      const allPost = await getAllPosts();
+      
+      return res.status(200).json(allPost);
+    } else {
+      return res
+        .status(404)
+        .json({ message: 'Looks like post does not exist!' });
     }
-  });
+  } catch (error) {
+    console.log(error)
+    return res
+    .status(400)
+    .json({ message: 'Something went wrong in adding comment!', error });
+  }
 };
 
-module.exports.deleteComment = (req, res) => {
-  Comment.findById(req.params.id, (err, comment) => {
+module.exports.deleteComment = async (req, res) => {
+  try {
     // IDOR
     // Deleting the Comment without checking who is the creator
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ message: 'something went wrong' });
-    } else {
-      post_id = comment.post;
-      comment.remove();
-      Post.findByIdAndUpdate(
+      const comment = await Comment.findById(req.params.id);
+      
+      if (!comment) {
+        return res.status(404).json({ message: 'Comment not found' });
+      }
+  
+      const post_id = comment.post;
+  
+      // Remove the comment using deleteOne or findByIdAndDelete
+      await Comment.deleteOne({ _id: req.params.id });
+  
+      await Post.findByIdAndUpdate(
         post_id,
-        { $pull: { comments: req.params.id } },
-        async (err, post) => {
-          if (err) {
-            console.log(err);
-            return res.status(400).json({ message: 'something went wrong' });
-          }
-          const allPost = await getAllPosts();
-          return res.json(allPost);
-        }
+        { $pull: { comments: req.params.id } }
       );
+  
+      const allPost = await getAllPosts(); // Define the implementation of getAllPosts function
+      return res.status(200).json(allPost);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ message: 'Something went wrong' });
     }
-  });
 };

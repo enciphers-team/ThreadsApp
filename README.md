@@ -35,12 +35,11 @@ NOTE: Be carefull while installing mongodb, as if the installation is not done p
 6) The ".env" file exists in the "client" folder. In the ".env" file, the "PORT" value is the port where the front-end react application is running.The default value of `PORT` is "3000".
 7) The `.env` file exists in the "client" folder. In the `.env` file, the value of "REACT_APP_API_BASE_URL" is the URL of the backend API & "PORT" is the port number for frontend.
 8) MongoDB is used by the application hence it should be configured properly and should be running before you install/run the application.
-9) Run the command "npm install" in the "ThreadsApp" folder to install all dependencies required for API. 
+9) Run the command "install:all_deps" in the "ThreadsApp" folder to install all dependencies required for API. 
 
 `Note:` _The application should ask to autofill the database with some dummy data. If the above step does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually, after the install is done._
 
-11) Run the command "npm run client_install" to install all dependencies of react app.
-12) Run the command "npm start" to start the application. The application will run on "http://localhost:3000". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "3000" is the default value of "PORT".
+11) Run the command "npm start" to start the application. The application will run on "http://localhost:3000". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "3000" is the default value of "PORT". The server will run on port number "4000"
 ```
 
 ## Starting the Project

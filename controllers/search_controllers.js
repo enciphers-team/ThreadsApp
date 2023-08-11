@@ -19,7 +19,7 @@ module.exports.search = async (req, res) => {
     let result = await User.collection.find({ name: temp }).forEach((data) => {
       finalResult.push(data);
     });
-    res.json(finalResult);
+    res.status(200).json(finalResult);
   } catch (error) {
     res.status(400).json({ message: 'Something went worong! Try again later' });
   }

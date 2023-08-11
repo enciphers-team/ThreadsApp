@@ -10,7 +10,7 @@
     "client": "cd client && npm start",
     "client_install": "cd client && npm install",
     "start": "concurrently -n 'server,client' -c 'red,blue' \"nodemon server.js\" \"npm run client\"",
-    "install_all": "npm install && npm run client_install"
+    "install:all_deps": "npm install && npm run client_install"
   },
   "author": "enciphers",
   "license": "ISC",

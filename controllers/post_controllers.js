@@ -60,127 +60,120 @@ module.exports.createPost = async (req, res) => {
   //if url exist
   if (req.body.post_url) {
     const options = { url: req.body.post_url };
-    ogs(options, (error, result, response) => {
+    ogs(options, async (error, result, response) => {
       // if url is wrong
       if (error) {
         console.log(error);
         return res.status(400).json({ message: 'Invalid url' });
       } else {
         if (req.file) {
-          Post.create(
-            {
-              description: req.body.content,
-              user: req.user._id,
-              postImage: req.file.location,
-              urlTitle: result.ogTitle,
-              url: result.ogUrl ? result.ogUrl : result.requestUrl,
-              urlImage: result.ogImage ? result.ogImage.url : null,
-              tags: req.body.tags ? req.body.tags : [],
-              isShared: false,
-            },
-            async (err, post) => {
-              if (err) {
-                return res
-                  .status(400)
-                  .json({ message: 'Error in creating post ! Try again' });
-              } else {
-                let result = await getAllPosts();
-                return res.json(result);
-              }
-            }
-          );
-        } else {
-          Post.create(
-            {
-              description: req.body.content,
-              user: req.user._id,
-              urlTitle: result.ogTitle,
-              urlImage: result.ogImage ? result.ogImage.url : null,
-              url: result.ogUrl ? result.ogUrl : result.requestUrl,
-              tags: req.body.tags ? req.body.tags : [],
-              isShared: false,
-            },
-            async (err, post) => {
-              if (err) {
-                console.log(err);
+          try {
+            await Post.create(
+              {
+                description: req.body.content,
+                user: req.user._id,
+                postImage: req.file.location,
+                urlTitle: result.ogTitle,
+                url: result.ogUrl ? result.ogUrl : result.requestUrl,
+                urlImage: result.ogImage ? result.ogImage.url : null,
+                tags: req.body.tags ? req.body.tags : [],
+                isShared: false,
+              });
 
-                return res
-                  .status(400)
-                  .json({ message: 'Error in creating post ! Try again' });
-              } else {
-                let result = await getAllPosts();
-                res.json(result);
-              }
-            }
-          );
+
+              let result = await getAllPosts();
+              return res.status(201).json(result);
+          } catch {
+            return res
+              .status(400)
+              .json({ message: 'Error in creating post ! Try again' });
+          }
+        } else {
+          try {
+            await Post.create(
+              {
+                description: req.body.content,
+                user: req.user._id,
+                urlTitle: result.ogTitle,
+                urlImage: result.ogImage ? result.ogImage.url : null,
+                url: result.ogUrl ? result.ogUrl : result.requestUrl,
+                tags: req.body.tags ? req.body.tags : [],
+                isShared: false,
+              });
+
+              let result = await getAllPosts();
+              return res.status(201).json(result);
+          } catch {
+            return res
+              .status(400)
+              .json({ message: 'Error in creating post ! Try again' });
+          }
         }
       }
     });
   } else {
     if (req.file) {
-      Post.create(
-        {
-          description: req.body.content,
-          user: req.user._id,
-          postImage: req.file.location,
-          tags: req.body.tags ? req.body.tags : [],
-          isShared: false,
-        },
-        async (err, post) => {
-          if (err) {
-            console.log(err);
+      try {
+        await Post.create(
+          {
+            description: req.body.content,
+            user: req.user._id,
+            postImage: req.file.location,
+            tags: req.body.tags ? req.body.tags : [],
+            isShared: false,
+          });
 
-            return res
-              .status(400)
-              .json({ message: 'Error in creating post ! Try again' });
-          } else {
-            let result = await getAllPosts();
-            return res.json(result);
-          }
-        }
-      );
+          let result = await getAllPosts();
+          return res.status(201).json(result);
+      } catch {
+        return res
+        .status(400)
+        .json({ message: 'Error in creating post ! Try again' });
+      }
     } else {
-      Post.create(
-        {
-          description: req.body.content,
-          user: req.user._id,
-          tags: req.body.tags ? req.body.tags : [],
-          isShared: false,
-        },
-        async (err, post) => {
-          if (err) {
-            console.log(err);
+      try {
+        await Post.create(
+          {
+            description: req.body.content,
+            user: req.user._id,
+            tags: req.body.tags ? req.body.tags : [],
+            isShared: false,
+          });
 
-            return res
-              .status(400)
-              .json({ message: 'Error in creating post ! Try again' });
-          } else {
-            let result = await getAllPosts();
-            return res.json(result);
-          }
-        }
-      );
+          let result = await getAllPosts();
+          return res.status(201).json(result);
+      } catch {
+        return res
+        .status(400)
+        .json({ message: 'Error in creating post ! Try again' });
+      }
     }
   }
 };
 
 module.exports.deletePost = async (req, res) => {
-  const deleteBookMark = await BookMark.deleteMany({ post: req.params.id });
-
-  Post.findById(req.params.id, async (err, post) => {
-    // IDOR
-    // Deleting the post without checking who is the creator
-    if (err) {
-      console.log(err);
-      return res
-        .status(400)
-        .json({ message: 'Error in creating post ! Try again' });
-    } else {
-      await post.remove();
-      Comment.deleteMany({ post: req.params.id }, async (err) => {
-        let posts = await getAllPosts();
+  try {
+    const deleteBookMark = await BookMark.deleteMany({ post: req.params.id });
+  
+    const post = Post.findById(req.params.id);
+      // IDOR
+      // Deleting the post without checking who is the creator
+      if (!post) {
+        return res
+          .status(400)
+          .json({ message: 'Error in creating post ! Try again' });
+      } else {
+        await post.deleteOne()
+        await Comment.deleteMany({ post: req.params.id });
+  
+        const posts = await getAllPosts();
         return res.status(200).json(posts);
-      });
-    }
-  });
+      }
+    
+  } catch(error) {
+    console.log(error);
+    return res
+    .status(400)
+    .json({ message: 'Error in creating post ! Try again' });
+  }
 };

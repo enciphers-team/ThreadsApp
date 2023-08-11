@@ -1,40 +1,74 @@
 const BookMark = require('../models/BookMark');
+const Post = require('../models/post');
+
+// Helper function to populate additional fields of 'post'
+async function populatePostFields(post) {
+  if (!post) {
+    return null;
+  }
+
+  const populatedPost = await Post.populate(post, [
+    { path: 'user' },
+    { path: 'comments.user' },
+    { path: 'likes' },
+    { path: 'tags' },
+    { path: 'sharedUser' },
+  ]);
+
+  return populatedPost;
+}
+
+async function populateBookmarkedPosts(bookmarks) {
+  const populatedBookmarks = [];
+
+  for (const bookmark of bookmarks) {
+    const populatedBookmark = await BookMark.populate(bookmark, {
+      path: 'post',
+      populate: {
+        path: 'user comments.user likes tags sharedUser',
+      }
+    });
+
+    populatedBookmarks.push(populatedBookmark);
+  }
+
+  return populatedBookmarks;
+}
 
 const getAllBookMarks = async (id) => {
   const data = await BookMark.find({ user: id }).sort('-createdAt');
 
-  const bookmark = await BookMark.deepPopulate(
-    data,
-    'post post.user post.comments.user post.likes post.tags post.sharedUser'
-  );
+  const bookmarkIds = data.map(item => item._id);
+  const populatedBookmarks = await populateBookmarkedPosts(data);
 
-  let posts = [];
-  for (i of bookmark) {
-    let post = i.post.toObject();
-    post.bookMarkId = i._id;
-    posts.push(post);
-  }
+  const posts = populatedBookmarks.map((bookmark, index) => {
+    const post = bookmark.post;
+    const populatedPost = {
+      ...post.toObject(), // Convert to plain object
+      bookMarkId: bookmarkIds[index]
+    };
+    return populatedPost;
+  });
   return posts;
 };
 
 module.exports.getBookMarks = async (req, res) => {
   try {
     const id = req.user.id;
-    const data = await BookMark.find({ user: id }).sort('-createdAt');
+    let bookmarks = await BookMark.find({ user: id })
+      .sort('-createdAt')
+      .populate('post')
+      .lean();
 
-    BookMark.deepPopulate(
-      data,
-      'post post.user post.comments.user post.likes post.tags post.sharedUser',
-      function (err, bookmark) {
-        let posts = [];
-        for (i of bookmark) {
-          let post = i.post.toObject();
-          post.bookMarkId = i._id;
-          posts.push(post);
-        }
-        res.status(200).json(posts);
-      }
-    );
+  for (const bookmark of bookmarks) {
+    const populatedPost = await populatePostFields(bookmark.post);
+    bookmark.post = populatedPost;
+    bookmark.post.bookMarkId = bookmark._id;
+  }
+
+  bookmarks = bookmarks.map((b) => ({...b, ...b.post}))
+
+  res.status(200).json(bookmarks);
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: 'Internal Server Error! Try again' });
@@ -60,7 +94,7 @@ module.exports.addBookMarks = async (req, res) => {
     const saveBookMark = await BookMark.create(data);
     const allBookmarks = await getAllBookMarks(req.user.id);
 
-    res.json({
+    res.status(201).json({
       message: 'Post Bookmarked successfully',
       bookmarks: allBookmarks,
     });
@@ -83,7 +117,7 @@ module.exports.deleteBookMark = async (req, res) => {
     const allBookmarks = await getAllBookMarks(req.user.id);
 
     // return;
-    return res.json({
+    return res.status(200).json({
       bookmarks: allBookmarks,
       message: 'bookmark removed succesfully',
     });

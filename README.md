@@ -12,44 +12,75 @@ This being the first release, we tried to add some basic functionaliites and rel
 
 ## Prerequisite for setting up the Lab
 
-1. Install Node.js for your system
+Before you begin, ensure you have the following software installed:
+
+1. [Node.js](https://nodejs.org/dist/) v16.17.3 or above
+2. [MongoDB](https://www.mongodb.com/docs/manual/installation/) v6
+
+## Checking Prerequisites
+
+To check if Node.js is installed, run the following command in your terminal:
 
 ```
-# Check these commands to verify if node is installed:
 node -v
-npm -v
+```
+If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
+
+To check if MongoDB is installed, run:
+```
+mongo --version
+```
+If MongoDB is installed, you will see the version information. If not, please follow the MongoDB installation guide for your system.
+
+### Installation
+
+Installation
+1. Clone this repository to your local machine:
+
+```
+git clone https://github.com/enciphers/ThreadsApp.git
+```
+Navigate to the project directory:
+
+```
+cd path/to/ThreadsApp
 ```
 
-2. Install MongoDB
-
-NOTE: Be carefull while installing mongodb, as if the installation is not done properly the debugging of the error is very tedious.
-
-## Setting Up the project
+2. Install all dependencies using the following command:
 
 ```
-1) Run the command "git clone https://github.com/enciphers/ThreadsApp.git" to clone the repo locally.
-2) Navigate to the downloaded folder `cd ThreadsApp`
-3) Open the "config.env" file and fill in the required information given in the file.  
-4) As some part of the application uses a S3 bucket, this needs to be created and configured properly. To setup this, create a s3 bucket on your AWS account, then fill the ACCESSKEYID, SECRETACCESSKEY, REGION, BUCKET_NAME values of your account in the env file. 
-5) The value of "PORT" is the port number where the Nodejs backend application is running. The default value of the "PORT" is "4000".
-6) The ".env" file exists in the "client" folder. In the ".env" file, the "PORT" value is the port where the front-end react application is running.The default value of `PORT` is "3000".
-7) The `.env` file exists in the "client" folder. In the `.env` file, the value of "REACT_APP_API_BASE_URL" is the URL of the backend API & "PORT" is the port number for frontend.
-8) MongoDB is used by the application hence it should be configured properly and should be running before you install/run the application.
-9) Run the command "install:all_deps" in the "ThreadsApp" folder to install all dependencies required for API. 
-
-`Note:` _The application should ask to autofill the database with some dummy data. If the above step does not ask to add dummy users to the app, use "npm run add_users" command to add dummy users manually, after the install is done._
-
-11) Run the command "npm start" to start the application. The application will run on "http://localhost:3000". Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. Feel free to change the default port number. "3000" is the default value of "PORT". The server will run on port number "4000"
+npm run install:all_deps
 ```
 
-## Starting the Project
+3. Create an .env file in the root of your project and set the following environment variables:
+
+```
+ACCESSKEYID=your-access-key-id
+SECRETACCESSKEY=your-secret-access-key
+REGION=your-region
+BUCKET_NAME=your-bucket-name
+REACT_APP_API_BASE_URL=http://localhost:4000
+```
+
+4. Adding Test Users
+To add test users to your MongoDB database, run:
+
+```
+npm run add_users
+```
+
+This command populates the database with test user data for testing purposes.
+
+## Running the Application
+Start the application using:
 
 ```
 npm start
 ```
-
 You should see a message `Connected to Moongose`, if that's the case then the project setup is done and all the prerequisite are installed properly
 if that's not the case, create an [issue](https://github.com/enciphers/ThreadsApp/issues) with the error and screenshot.
+
+This command starts the Node.js server(http://localhost:4000) and makes your application accessible at http://localhost:3000.
 
 #### Using the application
 

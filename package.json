@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "add_users": "node add_user.js",
-    "postinstall": "npm run add_users",
     "client": "cd client && npm start",
     "client_install": "cd client && npm install",
     "start": "concurrently -n 'server,client' -c 'red,blue' \"nodemon server.js\" \"npm run client\"",

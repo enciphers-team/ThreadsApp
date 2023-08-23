@@ -115,7 +115,7 @@ npm run build
 In the server directory, start the Node.js server with PM2:
 
 ```
-pm2 start app.js --name your-server-name
+pm2 start server.js --name your-server-name
 ```
 
 In the client directory, start the React app with PM2:

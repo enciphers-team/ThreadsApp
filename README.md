@@ -52,17 +52,27 @@ cd path/to/ThreadsApp
 npm run install:all_deps
 ```
 
-3. Create an .env file in the root of your project and set the following environment variables:
+3. Update config.env file in the root of your project and set the following environment variables:
 
 ```
 ACCESSKEYID=your-access-key-id
 SECRETACCESSKEY=your-secret-access-key
 REGION=your-region
 BUCKET_NAME=your-bucket-name
-REACT_APP_API_BASE_URL=http://localhost:4000
 ```
 
-4. Adding Test Users
+4. Create a .env file in client folder of your project and set the following environment variables:
+
+```
+REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
+```
+
+if you are deploying application using nginx configuration below, then use following in env.
+```
+REACT_APP_API_BASE_URL=http://localhost:4000/api/ // Or "<Your_Node.js_API_URL>/api/"
+```
+
+5. Adding Test Users
 To add test users to your MongoDB database, run:
 
 ```
@@ -90,6 +100,108 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 - "3000" is the default value of "PORT".
 - Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
 ```
+
+## Guide to Deploy the Application
+
+1. Follow the installation steps above.
+
+2. Build React Client
+Navigate to the client directory and build your React app:
+```
+npm run build
+```
+
+3: Start Server and Client with PM2
+In the server directory, start the Node.js server with PM2:
+
+```
+pm2 start app.js --name your-server-name
+```
+
+In the client directory, start the React app with PM2:
+
+```
+pm2 serve build --name your-client-name
+```
+
+3. Install Certbot
+Install Certbot to obtain SSL certificates:
+
+```
+sudo apt-get update
+sudo apt-get install certbot python3-certbot-nginx
+```
+
+4. Obtain SSL Certificates
+Run Certbot to obtain SSL certificates for your domain:
+
+```
+sudo certbot certonly --nginx -d your-domain.com -d www.your-domain.com
+```
+
+5. Configure Nginx
+Create an Nginx configuration file:
+
+```
+sudo nano /etc/nginx/sites-available/your-domain
+```
+Copy and paste the Nginx configuration below into this file.
+
+```
+server {
+    listen 80;
+    server_name threadsapp.co.in www.threadsapp.co.in; # Replace with your domain or server IP
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name threadsapp.co.in www.threadsapp.co.in;
+
+    ssl_certificate /etc/letsencrypt/live/threadsapp.co.in/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/threadsapp.co.in/privkey.pem;
+
+    # Other SSL-related settings
+
+    location / {
+        proxy_pass http://localhost:3000; # React app is running on port 3000
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:4000/;
+    }
+}
+```
+
+6. Enable Nginx Site
+Create a symbolic link to enable the Nginx site:
+
+```
+sudo ln -s /etc/nginx/sites-available/your-domain /etc/nginx/sites-enabled/
+```
+
+7. Test Nginx Configuration
+Test the Nginx configuration:
+
+```
+sudo nginx -t
+```
+8. Restart Nginx
+Restart Nginx to apply the changes:
+
+```
+sudo systemctl restart nginx
+```
+
+9. Access Your Application
+Access your application by visiting https://your-domain.com.
 
 ### NOTE:
 

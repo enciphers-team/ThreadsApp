@@ -81,7 +81,9 @@ npm run add_users
 
 This command populates the database with test user data for testing purposes.
 
-## Running the Application
+### There are two ways to start the application one is on Local and one is for deployment on server.
+
+## To Run Application in Local
 Start the application using:
 
 ```
@@ -92,16 +94,7 @@ if that's not the case, create an [issue](https://github.com/enciphers/ThreadsAp
 
 This command starts the Node.js server(http://localhost:4000) and makes your application accessible at http://localhost:3000.
 
-#### Using the application
-
-```
-- Visit --> http://localhost:3000/home
-- Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
-- "3000" is the default value of "PORT".
-- Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
-```
-
-## Guide to Deploy the Application
+## To Deploy the Application on Server
 
 1. Follow the installation steps above.
 
@@ -202,6 +195,15 @@ sudo systemctl restart nginx
 
 9. Access Your Application
 Access your application by visiting https://your-domain.com.
+
+#### Using the application
+
+```
+- Visit --> http://localhost:3000/home
+- Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
+- "3000" is the default value of "PORT".
+- Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
+```
 
 ### NOTE:
 

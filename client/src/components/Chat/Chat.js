@@ -6,12 +6,13 @@ import './Chat.scss';
 import ChatFriend from './ChatFriend/ChatFriend';
 import ChatSelf from './ChatSelf/ChatSelf';
 
+const Url = new URL(process.env.REACT_APP_API_BASE_URL);
 class Chat extends Component {
   constructor() {
     super();
     this.state = {
       isOpen: false,
-      socket: openSocket(process.env.REACT_APP_API_BASE_URL),
+      socket: openSocket(Url.origin),
       text: '',
       messageList: [],
       socketChanged: false,

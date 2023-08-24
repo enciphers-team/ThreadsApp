@@ -104,7 +104,13 @@ Navigate to the client directory and build your React app:
 npm run build
 ```
 
-3: Start Server and Client with PM2
+3. Install pm2 to run applications on server:
+
+```
+npm install pm2 -g
+```
+   
+4. Start Server and Client with PM2
 In the server directory, start the Node.js server with PM2:
 
 ```
@@ -117,7 +123,7 @@ In the client directory, start the React app with PM2:
 pm2 serve build --name your-client-name
 ```
 
-3. Install Certbot
+5. Install Certbot
 Install Certbot to obtain SSL certificates:
 
 ```
@@ -125,14 +131,14 @@ sudo apt-get update
 sudo apt-get install certbot python3-certbot-nginx
 ```
 
-4. Obtain SSL Certificates
+6. Obtain SSL Certificates
 Run Certbot to obtain SSL certificates for your domain:
 
 ```
 sudo certbot certonly --nginx -d your-domain.com -d www.your-domain.com
 ```
 
-5. Configure Nginx
+7. Configure Nginx
 Create an Nginx configuration file:
 
 ```
@@ -173,27 +179,27 @@ server {
 }
 ```
 
-6. Enable Nginx Site
+8. Enable Nginx Site
 Create a symbolic link to enable the Nginx site:
 
 ```
 sudo ln -s /etc/nginx/sites-available/your-domain /etc/nginx/sites-enabled/
 ```
 
-7. Test Nginx Configuration
+9. Test Nginx Configuration
 Test the Nginx configuration:
 
 ```
 sudo nginx -t
 ```
-8. Restart Nginx
+10. Restart Nginx
 Restart Nginx to apply the changes:
 
 ```
 sudo systemctl restart nginx
 ```
 
-9. Access Your Application
+11. Access Your Application
 Access your application by visiting https://your-domain.com.
 
 #### Using the application

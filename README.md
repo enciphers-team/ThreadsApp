@@ -69,7 +69,8 @@ REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
 
 if you are deploying application using nginx configuration below, then use following in env.
 ```
-REACT_APP_API_BASE_URL=http://localhost:4000/api/ // Or "<Your_Node.js_API_URL>/api/"
+REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg: https://example.com/api/)
+DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
 5. Adding Test Users
@@ -110,21 +111,20 @@ npm run build
 npm install pm2 -g
 ```
    
-4. Start Server and Client with PM2
-In the server directory, start the Node.js server with PM2:
+4. Start Server and Client with PM2.
+In the server directory(i.e root of repository), start the Node.js server with PM2:
 
 ```
-pm2 start server.js --name your-server-name
+pm2 start server.js 4000 --name '<your-server-name>'
 ```
 
 In the client directory, start the React app with PM2:
 
 ```
-pm2 serve build --name your-client-name
+pm2 start npm --name 'ThreadsAppClient' -- start
 ```
-
 5. Install Certbot
-Install Certbot to obtain SSL certificates:
+Install Certbot to obtain SSL certificates: 
 
 ```
 sudo apt-get update

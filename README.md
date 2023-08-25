@@ -143,7 +143,8 @@ sudo apt-get install certbot python3-certbot-nginx
 Create an Nginx configuration file:
 
 ```
-sudo nano /etc/nginx/sites-available/your-domain
+sudo rm etc/nginx/sites-available/default
+sudo vim /etc/nginx/sites-available/default
 ```
 Copy and paste the Nginx configuration below into this file.
 

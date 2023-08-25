@@ -1,4 +1,4 @@
-# ThreadsApp 
+ # ThreadsApp 
 
 ### About the app & idea
 
@@ -69,7 +69,7 @@ REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
 
 if you are deploying application using nginx configuration below, then use following in env.
 ```
-REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg: https://example.com/api/)
+REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain hten give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
@@ -123,6 +123,10 @@ In the client directory, start the React app with PM2:
 ```
 pm2 start npm --name 'ThreadsAppClient' -- start
 ```
+
+##### steps below are required only if you are deploying the application on some public domain.
+Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url http://<your-instance-ip>:3000.
+
 5. Install Certbot
 Install Certbot to obtain SSL certificates: 
 
@@ -132,7 +136,7 @@ sudo apt-get install certbot python3-certbot-nginx
 ```
 
 6. Obtain SSL Certificates
-Run Certbot to obtain SSL certificates for your domain:
+Run Certbot to obtain SSL certificates for your domain: 
 
 ```
 sudo certbot certonly --nginx -d your-domain.com -d www.your-domain.com
@@ -149,7 +153,7 @@ Copy and paste the Nginx configuration below into this file.
 ```
 server {
     listen 80;
-    server_name threadsapp.co.in www.threadsapp.co.in; # Replace with your domain or server IP
+    server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
 
     location / {
         return 301 https://$host$request_uri;
@@ -158,10 +162,10 @@ server {
 
 server {
     listen 443 ssl;
-    server_name threadsapp.co.in www.threadsapp.co.in;
+    server_name your-domain-name www.your-domain-name;
 
-    ssl_certificate /etc/letsencrypt/live/threadsapp.co.in/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/threadsapp.co.in/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/your-domain-name/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your-domain-name/privkey.pem;
 
     # Other SSL-related settings
 

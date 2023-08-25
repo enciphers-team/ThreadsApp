@@ -14,8 +14,8 @@ This being the first release, we tried to add some basic functionaliites and rel
 
 Before you begin, ensure you have the following software installed:
 
-1. [Node.js](https://nodejs.org/dist/) v16.17.3 or above
-2. [MongoDB](https://www.mongodb.com/docs/manual/installation/) v6
+1. [Node.js](https://www.linode.com/docs/guides/install-nodejs-on-ubuntu-22-04/#installing-a-specific-version) v16.17.3 or above
+2. [MongoDB](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu) v6
 
 ## Checking Prerequisites
 
@@ -74,7 +74,7 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
 5. Adding Test Users
-To add test users to your MongoDB database, run:
+To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
 ```
 npm run add_users
@@ -115,7 +115,7 @@ npm install pm2 -g
 In the server directory(i.e root of repository), start the Node.js server with PM2:
 
 ```
-pm2 start server.js 4000 --name '<your-server-name>'
+pm2 start server.js 4000 --name 'ThreadsAppServer'
 ```
 
 In the client directory, start the React app with PM2:
@@ -125,7 +125,7 @@ pm2 start npm --name 'ThreadsAppClient' -- start
 ```
 
 ##### steps below are required only if you are deploying the application on some public domain.
-Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url http://<your-instance-ip>:3000.
+Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url `http://<your-instance-ip>:3000`.
 
 5. Install Certbot
 Install Certbot to obtain SSL certificates: 

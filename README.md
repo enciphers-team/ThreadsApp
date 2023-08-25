@@ -100,6 +100,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 1. Follow the installation steps above.
 
 2. Build React Client
+
 Navigate to the client directory and build your React app:
 ```
 npm run build
@@ -112,6 +113,7 @@ npm install pm2 -g
 ```
    
 4. Start Server and Client with PM2.
+
 In the server directory(i.e root of repository), start the Node.js server with PM2:
 
 ```
@@ -128,6 +130,7 @@ pm2 start npm --name 'ThreadsAppClient' -- start
 Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url `http://<your-instance-ip>:3000`.
 
 5. Install Certbot
+
 Install Certbot to obtain SSL certificates: 
 
 ```
@@ -135,14 +138,8 @@ sudo apt-get update
 sudo apt-get install certbot python3-certbot-nginx
 ```
 
-6. Obtain SSL Certificates
-Run Certbot to obtain SSL certificates for your domain: 
+6. Configure Nginx
 
-```
-sudo certbot certonly --nginx -d your-domain.com -d www.your-domain.com
-```
-
-7. Configure Nginx
 Create an Nginx configuration file:
 
 ```
@@ -187,7 +184,15 @@ server {
 }
 ```
 
+7. Obtain SSL Certificates
+
+Run Certbot to obtain SSL certificates for your domain: 
+
+```
+sudo certbot certonly --nginx
+```
 8. Enable Nginx Site
+
 Create a symbolic link to enable the Nginx site:
 
 ```
@@ -195,6 +200,7 @@ sudo ln -s /etc/nginx/sites-available/your-domain /etc/nginx/sites-enabled/
 ```
 
 9. Test Nginx Configuration
+
 Test the Nginx configuration:
 
 ```
@@ -208,6 +214,7 @@ sudo systemctl restart nginx
 ```
 
 11. Access Your Application
+
 Access your application by visiting https://your-domain.com.
 
 #### Using the application

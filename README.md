@@ -104,22 +104,23 @@ Installation
 
 5. Adding Test Users
 
-To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
+    To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
      ```
      npm run add_users
      ```
 
-This command populates the database with test user data for testing purposes.
+     This command populates the database with test user data for testing purposes.
 
 ### There are two ways to start the application one is on Local and one is for deployment on server.
 
 ## To Run Application in Local
-Start the application using:
+   Start the application using:
 
-     ```
-     npm start
-     ```
+      ```
+      npm start
+      ```
+
 You should see a message `Connected to Moongose`, if that's the case then the project setup is done and all the prerequisite are installed properly
 if that's not the case, create an [issue](https://github.com/enciphers/ThreadsApp/issues) with the error and screenshot.
 

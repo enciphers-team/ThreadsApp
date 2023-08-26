@@ -14,8 +14,35 @@ This being the first release, we tried to add some basic functionaliites and rel
 
 Before you begin, ensure you have the following software installed:
 
-1. [Node.js](https://www.linode.com/docs/guides/install-nodejs-on-ubuntu-22-04/#installing-a-specific-version) v16.17.3 or above
-2. [MongoDB](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu) v6
+1. [MongoDB](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu) v6.
+
+Run below commands to install MongoDB V6.
+```
+sudo apt-get install gnupg curl
+
+curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+   sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg \
+   --dearmor
+
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo systemctl start mongod
+```
+
+
+2. [Node.js](https://www.linode.com/docs/guides/install-nodejs-on-ubuntu-22-04/#installing-a-specific-version) v16.17.3 or above.
+
+Run below commands to install Node.js v16.
+
+```
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+sudo apt-get install -y nodejs
+```
 
 ## Checking Prerequisites
 
@@ -28,7 +55,7 @@ If Node.js is installed, you will see the version number. If not, please downloa
 
 To check if MongoDB is installed, run:
 ```
-mongo --version
+mongod --version
 ```
 If MongoDB is installed, you will see the version information. If not, please follow the MongoDB installation guide for your system.
 

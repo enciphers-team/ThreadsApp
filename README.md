@@ -16,47 +16,47 @@ Before you begin, ensure you have the following software installed:
 
 1. [MongoDB](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu) v6.
 
-Run below commands to install MongoDB V6.
-```
-sudo apt-get install gnupg curl
-
-curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
-   sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg \
-   --dearmor
-
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-
-sudo apt-get update
-
-sudo apt-get install -y mongodb-org
-
-sudo systemctl start mongod
-```
+    Run below commands to install MongoDB V6.
+    ```
+    sudo apt-get install gnupg curl
+    
+    curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+       sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg \
+       --dearmor
+    
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+    
+    sudo apt-get update
+    
+    sudo apt-get install -y mongodb-org
+    
+    sudo systemctl start mongod
+    ```
 
 
 2. [Node.js](https://www.linode.com/docs/guides/install-nodejs-on-ubuntu-22-04/#installing-a-specific-version) v16.17.3 or above.
 
-Run below commands to install Node.js v16.
-
-```
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-
-sudo apt-get install -y nodejs
-```
+    Run below commands to install Node.js v16.
+    
+    ```
+    curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    
+    sudo apt-get install -y nodejs
+    ```
 
 ## Checking Prerequisites
 
 To check if Node.js is installed, run the following command in your terminal:
 
-```
-node -v
-```
+    ```
+    node -v
+    ```
 If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
 
 To check if MongoDB is installed, run:
-```
-mongod --version
-```
+    ```
+    mongod --version
+    ```
 If MongoDB is installed, you will see the version information. If not, please follow the MongoDB installation guide for your system.
 
 ### Installation
@@ -64,49 +64,50 @@ If MongoDB is installed, you will see the version information. If not, please fo
 Installation
 1. Clone this repository to your local machine:
 
-```
-git clone https://github.com/enciphers/ThreadsApp.git
-```
+    ```
+    git clone https://github.com/enciphers/ThreadsApp.git
+    ```
 Navigate to the project directory:
 
-```
-cd path/to/ThreadsApp
-```
+    ```
+    cd path/to/ThreadsApp
+    ```
 
 2. Install all dependencies using the following command:
 
-```
-npm run install:all_deps
-```
+    ```
+    npm run install:all_deps
+    ```
 
 3. Update config.env file in the root of your project and set the following environment variables:
 
-```
-ACCESSKEYID=your-access-key-id
-SECRETACCESSKEY=your-secret-access-key
-REGION=your-region
-BUCKET_NAME=your-bucket-name
-```
+    ```
+    ACCESSKEYID=your-access-key-id
+    SECRETACCESSKEY=your-secret-access-key
+    REGION=your-region
+    BUCKET_NAME=your-bucket-name
+    ```
 
 4. Create a .env file in client folder of your project and set the following environment variables:
 
-```
-REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
-```
+    ```
+    REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
+    ```
 
 if you are deploying application using nginx configuration, then use following in env.
-```
-REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
-DANGEROUSLY_DISABLE_HOST_CHECK=true
-```
+
+    ```
+    REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
+    DANGEROUSLY_DISABLE_HOST_CHECK=true
+    ```
 
 5. Adding Test Users
 
 To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
-```
-npm run add_users
-```
+     ```
+     npm run add_users
+     ```
 
 This command populates the database with test user data for testing purposes.
 
@@ -115,9 +116,9 @@ This command populates the database with test user data for testing purposes.
 ## To Run Application in Local
 Start the application using:
 
-```
-npm start
-```
+     ```
+     npm start
+     ```
 You should see a message `Connected to Moongose`, if that's the case then the project setup is done and all the prerequisite are installed properly
 if that's not the case, create an [issue](https://github.com/enciphers/ThreadsApp/issues) with the error and screenshot.
 
@@ -129,131 +130,131 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 
 2. Build React Client
 
-Navigate to the client directory and build your React app:
-```
-npm run build
-```
+     Navigate to the client directory and build your React app:
+     ```
+     npm run build
+     ```
 
 3. Install pm2 to run applications on server:
 
-```
-npm install pm2 -g
-```
+     ```
+     npm install pm2 -g
+     ```
    
 4. Start Server and Client with PM2.
 
-In the directory ThreadsApp(i.e root of repository), start the Node.js server with PM2:
+     In the directory ThreadsApp(i.e root of repository), start the Node.js server with PM2:
+     
+     ```
+     pm2 start server.js 4000 --name 'ThreadsAppServer'
+     ```
 
-```
-pm2 start server.js 4000 --name 'ThreadsAppServer'
-```
-
-In the client directory, start the React app with PM2:
-
-```
-pm2 start npm --name 'ThreadsAppClient' -- start
-```
+     In the client directory, start the React app with PM2:
+     
+     ```
+     pm2 start npm --name 'ThreadsAppClient' -- start
+     ```
 
 ##### steps below are required only if you are deploying the application on some public domain.
 Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url `http://<your-instance-ip>:3000`.
 
 5. Install Certbot
 
-Install Certbot to obtain SSL certificates: 
-
-```
-sudo apt-get update
-sudo apt-get install certbot python3-certbot-nginx
-```
+     Install Certbot to obtain SSL certificates: 
+     
+     ```
+     sudo apt-get update
+     sudo apt-get install certbot python3-certbot-nginx
+     ```
 
 6. Configure Nginx
 
-Create an Nginx configuration file:
-
-```
-sudo rm /etc/nginx/sites-available/default
-sudo vim /etc/nginx/sites-available/default
-```
-Copy and paste the Nginx configuration below into this file. Change your-domain-name with your valid domain name and then paste to the file.
-
-```
-server {
-    listen 80;
-    server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
-
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-server {
-    listen 443 ssl;
-    server_name your-domain-name www.your-domain-name;
-
-    ssl_certificate /etc/letsencrypt/live/your-domain-name/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your-domain-name/privkey.pem;
-
-    # Other SSL-related settings
-
-    location / {
-        proxy_pass http://localhost:3000; # React app is running on port 3000
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-
-    location /api/ {
-        proxy_pass http://localhost:4000/;
-    }
-}
-```
+     Create an Nginx configuration file:
+     
+     ```
+     sudo rm /etc/nginx/sites-available/default
+     sudo vim /etc/nginx/sites-available/default
+     ```
+     Copy and paste the Nginx configuration below into this file. Change your-domain-name with your valid domain name and then paste to the file.
+     
+     ```
+     server {
+         listen 80;
+         server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
+     
+         location / {
+             return 301 https://$host$request_uri;
+         }
+     }
+     
+     server {
+         listen 443 ssl;
+         server_name your-domain-name www.your-domain-name;
+     
+         ssl_certificate /etc/letsencrypt/live/your-domain-name/fullchain.pem;
+         ssl_certificate_key /etc/letsencrypt/live/your-domain-name/privkey.pem;
+     
+         # Other SSL-related settings
+     
+         location / {
+             proxy_pass http://localhost:3000; # React app is running on port 3000
+             proxy_set_header Host $host;
+             proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_set_header X-Forwarded-Proto $scheme;
+     
+             proxy_http_version 1.1;
+             proxy_set_header Upgrade $http_upgrade;
+             proxy_set_header Connection "upgrade";
+         }
+     
+         location /api/ {
+             proxy_pass http://localhost:4000/;
+         }
+     }
+     ```
 
 7. Obtain SSL Certificates
 
-Run Certbot to obtain SSL certificates for your domain: 
-
-```
-sudo certbot certonly --nginx
-```
+     Run Certbot to obtain SSL certificates for your domain: 
+     
+     ```
+     sudo certbot certonly --nginx
+     ```
 8. Enable Nginx Site
 
-Create a symbolic link to enable the Nginx site(Replace your-domain-name with valid domain name):
-
-```
-sudo ln -s /etc/nginx/sites-available/your-domain-name /etc/nginx/sites-enabled/
-```
+     Create a symbolic link to enable the Nginx site(Replace your-domain-name with valid domain name):
+     
+     ```
+     sudo ln -s /etc/nginx/sites-available/your-domain-name /etc/nginx/sites-enabled/
+     ```
 
 9. Test Nginx Configuration
 
-Test the Nginx configuration:
-
-```
-sudo nginx -t
-```
+     Test the Nginx configuration:
+     
+     ```
+     sudo nginx -t
+     ```
 10. Restart Nginx
-Restart Nginx to apply the changes:
-
-```
-sudo systemctl restart nginx
-```
+     Restart Nginx to apply the changes:
+     
+     ```
+     sudo systemctl restart nginx
+     ```
 
 11. Access Your Application
 
-Access your application by visiting https://your-domain.com.
+    Access your application by visiting https://your-domain.com.
 
 #### Using the application
 
-```
-- Visit --> http://localhost:3000/home
-- Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
-- "3000" is the default value of "PORT".
-- Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
-```
+     ```
+     - Visit --> http://localhost:3000/home
+     - Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
+     - "3000" is the default value of "PORT".
+     - Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
+     ```
 
 ### NOTE:
 

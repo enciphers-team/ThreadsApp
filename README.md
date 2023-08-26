@@ -46,12 +46,13 @@ Before you begin, ensure you have the following software installed:
 
 ## Checking Prerequisites
 
-To check if Node.js is installed, run the following command in your terminal:
+    To check if Node.js is installed, run the following command in your terminal:
 
     ```
     node -v
     ```
-If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
+    
+    If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
 
 To check if MongoDB is installed, run:
     ```
@@ -67,7 +68,7 @@ Installation
     ```
     git clone https://github.com/enciphers/ThreadsApp.git
     ```
-Navigate to the project directory:
+    Navigate to the project directory:
 
     ```
     cd path/to/ThreadsApp

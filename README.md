@@ -91,24 +91,7 @@ Installation
     BUCKET_NAME=your-bucket-name
     ```
 
-4. Update a .env file in client folder and set the following environment variables:
-
-    ```
-    REACT_APP_API_BASE_URL=http://localhost:4000/ // Or <Your_Node.js_API_URL>
-    ```
-
-    if you are deploying application using nginx configuration and domain name, then use following in .env.
-
-     ```
-     REACT_APP_API_BASE_URL=http://<your-domain-name>/api/ // (for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance without domain then give value as http://<your-instance-ip>:4000/)
-     ```
-     
-     OR if you are deploying without nginx and no domain name (i.e running on instance with ip and no domain registered)
-   
-     ```
-     REACT_APP_API_BASE_URL=http://<your-instance-ip>:4000/  // (for eg if you are deploying on instance with ip 10.10.10.10 then give value as https://10.10.10.10:4000/)
-     ```
-6. Adding Test Users
+4. Adding Test Users
 
     To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
@@ -136,20 +119,32 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 
 1. Follow the installation steps above.
 
-2. Build React Client
+2. Update a .env file in client folder and set the following environment variables:
+
+     ```
+     REACT_APP_API_BASE_URL=http://<your-domain-name>/api/ // (for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance without domain then give value as http://<your-instance-ip>:4000/)
+     ```
+     
+     OR if you are deploying without nginx and no domain name (i.e running on instance with ip and no domain registered)
+   
+     ```
+     REACT_APP_API_BASE_URL=http://<your-instance-ip>:4000/  // (for eg if you are deploying on instance with ip 10.10.10.10 then give value as https://10.10.10.10:4000/)
+     ```
+
+3. Build React Client
 
      Navigate to the client directory(cd /path/to/ThreadsApp/client) and build your React app:
      ```
      npm run build
      ```
 
-3. Install pm2 to run applications on server:
+4. Install pm2 to run applications on server:
 
      ```
      npm install pm2 -g
      ```
    
-4. Start Server and Client with PM2.
+5. Start Server and Client with PM2.
 
      In the directory ThreadsApp(i.e root of repository), start the Node.js server with PM2:
      
@@ -188,7 +183,7 @@ Otherwise if you are not using a domain but running instance to run your app, th
      ```
      server {
          listen 80;
-         server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
+         server_name your-domain-name www.your-domain-name;
      
          location / {
              return 301 https://$host$request_uri;
@@ -213,7 +208,7 @@ Otherwise if you are not using a domain but running instance to run your app, th
      ```
      server {
          listen 80;
-         server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
+         server_name your-domain-name www.your-domain-name;
      
          location / {
              return 301 https://$host$request_uri;
@@ -263,6 +258,7 @@ Otherwise if you are not using a domain but running instance to run your app, th
      sudo nginx -t
      ```
 11. Restart Nginx
+
      Restart Nginx to apply the changes:
      
      ```
@@ -273,14 +269,6 @@ Otherwise if you are not using a domain but running instance to run your app, th
 
     Access your application by visiting https://your-domain.com.
 
-#### Using the application
-
-     ```
-     - Visit --> http://localhost:3000/home
-     - Here "3000" is the value of the "PORT" provided in the ".env" file in the client folder. 
-     - "3000" is the default value of "PORT".
-     - Sign up --> Sign in --> Explore the app --> Try to find vulnerabilities as you would in any other application. Remember, this is no CTF.
-     ```
 
 ### NOTE:
 

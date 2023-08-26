@@ -91,20 +91,24 @@ Installation
     BUCKET_NAME=your-bucket-name
     ```
 
-4. Create a .env file in client folder of your project and set the following environment variables:
+4. Update a .env file in client folder and set the following environment variables:
 
     ```
-    REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
+    REACT_APP_API_BASE_URL=http://localhost:4000/ // Or <Your_Node.js_API_URL>
     ```
 
-    if you are deploying application using nginx configuration, then use following in env.
+    if you are deploying application using nginx configuration and domain name, then use following in .env.
 
      ```
-     REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
-     DANGEROUSLY_DISABLE_HOST_CHECK=true
+     REACT_APP_API_BASE_URL=http://<your-domain-name>/api/ // (for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance without domain then give value as http://<your-instance-ip>:4000/)
      ```
-
-5. Adding Test Users
+     
+     OR if you are deploying without nginx and no domain name (i.e running on instance with ip and no domain registered)
+   
+     ```
+     REACT_APP_API_BASE_URL=http://<your-instance-ip>:4000/  // (for eg if you are deploying on instance with ip 10.10.10.10 then give value as https://10.10.10.10:4000/)
+     ```
+6. Adding Test Users
 
     To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
@@ -134,7 +138,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 
 2. Build React Client
 
-     Navigate to the client directory and build your React app:
+     Navigate to the client directory(cd /path/to/ThreadsApp/client) and build your React app:
      ```
      npm run build
      ```
@@ -162,7 +166,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 ##### steps below are required only if you are deploying the application on some public domain.
 Otherwise if you are not using a domain but running instance to run your app, then your application should be accessible with url `http://<your-instance-ip>:3000`.
 
-5. Install Certbot
+5. [Install Certbot](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-ubuntu-20-04)
 
      Install Certbot to obtain SSL certificates: 
      
@@ -171,14 +175,39 @@ Otherwise if you are not using a domain but running instance to run your app, th
      sudo apt-get install certbot python3-certbot-nginx
      ```
 
-6. Configure Nginx
+6. Get SSL certificates and Configure Nginx
 
      Create an Nginx configuration file:
      
      ```
-     sudo rm /etc/nginx/sites-available/default
      sudo vim /etc/nginx/sites-available/default
      ```
+
+   Copy and paste the Nginx configuration below at the end of the file. Change your-domain-name with your valid domain name and then paste to the file.
+     
+     ```
+     server {
+         listen 80;
+         server_name your-domain-name www.your-domain-name; # Replace with your domain or server IP
+     
+         location / {
+             return 301 https://$host$request_uri;
+         }
+     }
+     ```
+
+     Run Certbot to obtain SSL certificates for your domain: 
+     
+     ```
+     sudo certbot certonly --nginx
+     ```
+
+     Run below commands to update nginx configuration with generated ssl certificates (Change your-domain-name with valid domain name you registered):
+
+     ```
+     sudo vim /etc/nginx/sites-available/your-domain-name
+     ```
+     
      Copy and paste the Nginx configuration below into this file. Change your-domain-name with your valid domain name and then paste to the file.
      
      ```
@@ -218,14 +247,7 @@ Otherwise if you are not using a domain but running instance to run your app, th
      }
      ```
 
-7. Obtain SSL Certificates
-
-     Run Certbot to obtain SSL certificates for your domain: 
-     
-     ```
-     sudo certbot certonly --nginx
-     ```
-8. Enable Nginx Site
+9. Enable Nginx Site
 
      Create a symbolic link to enable the Nginx site(Replace your-domain-name with valid domain name):
      
@@ -233,21 +255,21 @@ Otherwise if you are not using a domain but running instance to run your app, th
      sudo ln -s /etc/nginx/sites-available/your-domain-name /etc/nginx/sites-enabled/
      ```
 
-9. Test Nginx Configuration
+10. Test Nginx Configuration
 
      Test the Nginx configuration:
      
      ```
      sudo nginx -t
      ```
-10. Restart Nginx
+11. Restart Nginx
      Restart Nginx to apply the changes:
      
      ```
      sudo systemctl restart nginx
      ```
 
-11. Access Your Application
+12. Access Your Application
 
     Access your application by visiting https://your-domain.com.
 

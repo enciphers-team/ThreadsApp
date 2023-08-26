@@ -74,6 +74,7 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
 5. Adding Test Users
+
 To add test users to your MongoDB database, run below command at root of project folder (i.e /ThreadsApp):
 
 ```
@@ -114,7 +115,7 @@ npm install pm2 -g
    
 4. Start Server and Client with PM2.
 
-In the server directory(i.e root of repository), start the Node.js server with PM2:
+In the directory ThreadsApp(i.e root of repository), start the Node.js server with PM2:
 
 ```
 pm2 start server.js 4000 --name 'ThreadsAppServer'

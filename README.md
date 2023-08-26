@@ -200,7 +200,8 @@ Otherwise if you are not using a domain but running instance to run your app, th
      Run below commands to update nginx configuration with generated ssl certificates (Change your-domain-name with valid domain name you registered):
 
      ```
-     sudo vim /etc/nginx/sites-available/your-domain-name
+     sudo rm /etc/nginx/sites-available/default
+     sudo vim /etc/nginx/sites-available/default
      ```
      
      Copy and paste the Nginx configuration below into this file. Change your-domain-name with your valid domain name and then paste to the file.
@@ -241,15 +242,7 @@ Otherwise if you are not using a domain but running instance to run your app, th
          }
      }
      ```
-
-9. Enable Nginx Site
-
-     Create a symbolic link to enable the Nginx site(Replace your-domain-name with valid domain name):
-     
-     ```
-     sudo ln -s /etc/nginx/sites-available/your-domain-name /etc/nginx/sites-enabled/
-     ```
-
+ 
 10. Test Nginx Configuration
 
      Test the Nginx configuration:

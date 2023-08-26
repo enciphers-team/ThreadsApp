@@ -46,15 +46,15 @@ Before you begin, ensure you have the following software installed:
 
 ## Checking Prerequisites
 
-    To check if Node.js is installed, run the following command in your terminal:
+   To check if Node.js is installed, run the following command in your terminal:
 
-    ```
-    node -v
-    ```
+      ```
+      node -v
+      ```
     
-    If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
+   If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
 
-To check if MongoDB is installed, run:
+   To check if MongoDB is installed, run:
     ```
     mongod --version
     ```
@@ -95,12 +95,12 @@ Installation
     REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
     ```
 
-if you are deploying application using nginx configuration, then use following in env.
+    if you are deploying application using nginx configuration, then use following in env.
 
-    ```
-    REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
-    DANGEROUSLY_DISABLE_HOST_CHECK=true
-    ```
+     ```
+     REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
+     DANGEROUSLY_DISABLE_HOST_CHECK=true
+     ```
 
 5. Adding Test Users
 

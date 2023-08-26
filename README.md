@@ -48,17 +48,17 @@ Before you begin, ensure you have the following software installed:
 
    To check if Node.js is installed, run the following command in your terminal:
 
-```
-      node -v
-```
+   ```
+   node -v
+   ```
     
    If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
 
    To check if MongoDB is installed, run:
 
-```
-    mongod --version
-```
+   ```
+   mongod --version
+   ```
 
 If MongoDB is installed, you will see the version information. If not, please follow the MongoDB installation guide for your system.
 
@@ -119,9 +119,9 @@ Installation
 ## To Run Application in Local
    Start the application using:
 
-      ```
-      npm start
-      ```
+   ```
+   npm start
+   ```
 
 You should see a message `Connected to Moongose`, if that's the case then the project setup is done and all the prerequisite are installed properly
 if that's not the case, create an [issue](https://github.com/enciphers/ThreadsApp/issues) with the error and screenshot.

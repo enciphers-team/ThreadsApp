@@ -48,16 +48,18 @@ Before you begin, ensure you have the following software installed:
 
    To check if Node.js is installed, run the following command in your terminal:
 
-      ```
+```
       node -v
-      ```
+```
     
    If Node.js is installed, you will see the version number. If not, please download and install it from the official website.
 
    To check if MongoDB is installed, run:
-    ```
+
+```
     mongod --version
-    ```
+```
+
 If MongoDB is installed, you will see the version information. If not, please follow the MongoDB installation guide for your system.
 
 ### Installation

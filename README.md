@@ -67,9 +67,9 @@ BUCKET_NAME=your-bucket-name
 REACT_APP_API_BASE_URL=http://localhost:4000 // Or <Your_Node.js_API_URL>
 ```
 
-if you are deploying application using nginx configuration below, then use following in env.
+if you are deploying application using nginx configuration, then use following in env.
 ```
-REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain hten give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
+REACT_APP_API_BASE_URL=http://localhost:4000/api/ // (Or "<Your_Node.js_API_URL>/api/" for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance or server then give value as http://<your-instance-ip>:4000)
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
@@ -143,10 +143,10 @@ sudo apt-get install certbot python3-certbot-nginx
 Create an Nginx configuration file:
 
 ```
-sudo rm etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-available/default
 sudo vim /etc/nginx/sites-available/default
 ```
-Copy and paste the Nginx configuration below into this file.
+Copy and paste the Nginx configuration below into this file. Change your-domain-name with your valid domain name and then paste to the file.
 
 ```
 server {
@@ -194,10 +194,10 @@ sudo certbot certonly --nginx
 ```
 8. Enable Nginx Site
 
-Create a symbolic link to enable the Nginx site:
+Create a symbolic link to enable the Nginx site(Replace your-domain-name with valid domain name):
 
 ```
-sudo ln -s /etc/nginx/sites-available/your-domain /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/your-domain-name /etc/nginx/sites-enabled/
 ```
 
 9. Test Nginx Configuration

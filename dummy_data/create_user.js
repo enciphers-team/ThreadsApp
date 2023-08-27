@@ -7,8 +7,8 @@ const Post = require('../models/post');
 
 const mongoose = require('mongoose');
 const postData = require('./post_data');
-const ogs = require('open-graph-scraper');
 const deleteUser = require('../util/delete_user');
+const getPageMetadata = require('../util/helper_functions');
 
 const createFollwers = (interval) => {
   console.log('--------completed adding user and posts---------------');
@@ -67,26 +67,30 @@ const createPost = async (data) => {
   //if url exist
 
   if (data.post_url) {
-    const options = { url: data.post_url };
-    ogs(options, async (error, result, response) => {
-      // if url is wrong
-      if (error) {
+    const post_url = data.post_url;
+    const metaData = await getPageMetadata(post_url);
+      const { error, result } = metaData;
+
+      if (error || !result) {
         return;
       } else {
-        const post = await Post.create({
+        let postData = {
           description: data.description,
           user: data._id,
           postImage: data.imageUrl,
-          urlTitle: result.ogTitle,
-          url: result.ogUrl ? result.ogUrl : result.requestUrl,
-          urlImage: result.ogImage ? result.ogImage.url : null,
+          urlTitle: result.og.title || result.meta.title,
+          urlImage: result.og.image
+            ? result.og.image
+            : result.images[0]
+            ? result.images[0]["src"]
+            : post_url,
+          url: result.og.url ? result.og.url : post_url,
           tags: data.tags ? data.tags : [],
           isShared: false,
-        });
+        };
 
-        console.log(post);
+        await Post.create(postData);
       }
-    });
   } else {
     const post = await Post.create({
       description: data.description,

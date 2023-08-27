@@ -18,7 +18,7 @@ const imageFilter = (req, file, cb) => {
 const middleware = function (req, res, next) {
   var upload = multer({
     limits: {
-      fileSize: 5 * 1024 * 1024, // 1MB
+      fileSize: 7 * 1024 * 1024, // 7MB
     },
     fileFilter: imageFilter,
     storage: multerS3({

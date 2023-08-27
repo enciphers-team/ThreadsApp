@@ -149,7 +149,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
      In the directory ThreadsApp(i.e root of repository), start the Node.js server with PM2:
      
      ```
-     pm2 start server.js 4000 --name 'ThreadsAppServer'
+     pm2 start server.js --name 'ThreadsAppServer'
      ```
 
      In the client directory, start the React app with PM2:

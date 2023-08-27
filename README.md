@@ -122,7 +122,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
 2. Update a .env file in client folder and set the following environment variables:
 
      ```
-     REACT_APP_API_BASE_URL=http://<your-domain-name>/api/ // (for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance without domain then give value as http://<your-instance-ip>:4000/)
+     REACT_APP_API_BASE_URL=https://<your-domain-name>/api/ // (for eg if you are deploying on domain example.com then give value as https://example.com/api/ otherwise if running on some instance without domain then give value as http://<your-instance-ip>:4000/)
      ```
      
      OR if you are deploying without nginx and no domain name (i.e running on instance with ip and no domain registered)

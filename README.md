@@ -128,7 +128,7 @@ This command starts the Node.js server(http://localhost:4000) and makes your app
      OR if you are deploying without nginx and no domain name (i.e running on instance with ip and no domain registered)
    
      ```
-     REACT_APP_API_BASE_URL=http://<your-instance-ip>:4000/  // (for eg if you are deploying on instance with ip 10.10.10.10 then give value as https://10.10.10.10:4000/)
+     REACT_APP_API_BASE_URL=https://<your-instance-ip>:4000/  // (for eg if you are deploying on instance with ip 10.10.10.10 then give value as https://10.10.10.10:4000/)
      ```
 
 3. Build React Client

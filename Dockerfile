@@ -1,20 +1,11 @@
-FROM node:13 as installer
-COPY . /threadsapp
-WORKDIR /threadsapp
-RUN npm install && \
-    npm run client_install
+# Use the official Node.js 16 image as a parent image
+FROM node:16
 
-FROM node:13-slim
-# hadolint ignore=DL3008
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    mongodb \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Set the working directory in the container
+WORKDIR /app
 
-WORKDIR /threadsapp
-# RUN groupadd -r threadsapp && useradd --no-log-init -r -g threadsapp threadsapp
-# USER threadsapp
+# Copy the current directory contents into the container at /usr/src/app
+COPY . .
 
-COPY --from=installer /threadsapp .
-EXPOSE 3000 4000
-CMD ["bash", "-c", "service mongodb start && npm start"]
+# Install any needed packages specified in package*.json
+RUN npm run install:all_deps

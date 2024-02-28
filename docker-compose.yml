@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+  threadsapp:
+    build: .
+    image: threadsapp:latest
+    ports:
+      - "3000:3000"
+      - "4000:4000" # Backend port 
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/vulnerable_dev_database
+      - RUNNING_IN_DOCKER=true
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    command: sh -c "npm run add_users && npm start"
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
+

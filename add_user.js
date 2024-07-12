@@ -7,34 +7,37 @@ dotenv.config({ path: './config.env' });
 
 // Assuming you have a User model, adjust the import path as necessary
 const User = require('./models/user');
+const userData = require('./dummy_data/user_data');
 
-// Function to check if users already exist in the database
-async function checkUsersExist() {
+// Function to check if specific users already exist in the database
+async function checkAndAddUsers() {
   try {
-    console.log('Checking if users exist...');
-    const count = await User.countDocuments({});
-    console.log(`Users count: ${count}`);
-    return count > 0;
+    console.log('Checking and adding users if they do not exist...');
+    const existingUsers = await User.find({ email: { $in: userData.map(user => user.email) } });
+    const existingEmails = existingUsers.map(user => user.email);
+
+    const usersToAdd = userData.filter(user => !existingEmails.includes(user.email));
+
+    if (usersToAdd.length === 0) {
+      console.log('All users from user_data.js already exist. No new users to add.');
+      process.exit();
+    } else {
+      console.log(`Adding ${usersToAdd.length} new users...`);
+      exec(`node ${path.join(__dirname, 'dummy_data', 'create_user.js')}`, { env: process.env }, (err, stdout, stderr) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        if (stderr) console.log('stderr:', stderr);
+        console.log(stdout);
+        console.log('---------Users Added successfully----------');
+        process.exit();
+      });
+    }
   } catch (err) {
-    console.error("Error checking users:", err);
+    console.error("Error checking and adding users:", err);
     process.exit(1);
   }
-}
-
-// Function to execute the create_user.js script
-function addUser() {
-  const filePath = path.join(__dirname, 'dummy_data', 'create_user.js');
-  console.log('Started adding user, Please wait ...');
-  exec(`node ${filePath}`, { env: process.env }, (err, stdout, stderr) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    if (stderr) console.log('stderr:', stderr);
-    console.log(stdout);
-    console.log('---------Users Added successfully----------');
-    process.exit();
-  });
 }
 
 // MongoDB connection
@@ -48,28 +51,16 @@ db.once('open', async function () {
 
   // Determine if the script is running inside Docker
   if (process.env.RUNNING_IN_DOCKER === 'true') {
-    const exist = await checkUsersExist();
-    if (!exist) {
-      addUser();
-    } else {
-      console.log('Users already exist, skipping addition.');
-      process.exit();
-    }
+    await checkAndAddUsers();
   } else {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
-    rl.question('Do you want to add users with posts? If yes then type "yes" else type "no" ', async function(response) {
+    rl.question('Do you want to add new users from user_data.js? If yes then type "yes" else type "no" ', async function(response) {
       if (response.toLocaleLowerCase() === 'yes') {
-        const exist = await checkUsersExist();
-        if (!exist) {
-          addUser(); // Add users if none exist and user types 'yes'
-        } else {
-          console.log('Users already exist, skipping addition.');
-          process.exit();
-        }
+        await checkAndAddUsers();
       } else {
         console.log('User addition skipped.');
         process.exit();
@@ -77,3 +68,4 @@ db.once('open', async function () {
     });
   }
 });
+

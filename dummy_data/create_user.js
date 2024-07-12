@@ -10,24 +10,24 @@ const postData = require('./post_data');
 const deleteUser = require('../util/delete_user');
 const getPageMetadata = require('../util/helper_functions');
 
-const createFollwers = (interval) => {
+const createFollowers = (interval) => {
   console.log('--------completed adding user and posts---------------');
   clearInterval(interval);
 
   let i = 0;
 
-  const newInteval = setInterval(async () => {
+  const newInterval = setInterval(async () => {
     if (i == userData.length) {
-      console.log('***********Follower addding done *************');
+      console.log('***********Follower adding done *************');
       console.log('-----------closing database connection ------------');
       mongoose.connection.close();
 
-      clearInterval(newInteval);
+      clearInterval(newInterval);
       return;
     }
 
-    let current_user = userData[i];
-    let followingId = await User.findOne({ email: current_user.email });
+    let currentUser = userData[i];
+    let followingId = await User.findOne({ email: currentUser.email });
     followingId = followingId._id;
 
     let start = Math.floor(Math.random() * 24) + 1;
@@ -36,9 +36,8 @@ const createFollwers = (interval) => {
     if (start > end) {
       let temp = start;
       start = end;
-      end = start;
+      end = temp;
     }
-
 
     for (let i = start; i <= end; i++) {
       let followerId = await User.findOne({ email: userData[i].email });
@@ -63,34 +62,31 @@ const createFollwers = (interval) => {
 };
 
 const createPost = async (data) => {
-  // return;
-  //if url exist
-
   if (data.post_url) {
     const post_url = data.post_url;
     const metaData = await getPageMetadata(post_url);
-      const { error, result } = metaData;
+    const { error, result } = metaData;
 
-      if (error || !result) {
-        return;
-      } else {
-        let postData = {
-          description: data.description,
-          user: data._id,
-          postImage: data.imageUrl,
-          urlTitle: result.og.title || result.meta.title,
-          urlImage: result.og.image
-            ? result.og.image
-            : result.images[0]
-            ? result.images[0]["src"]
-            : post_url,
-          url: result.og.url ? result.og.url : post_url,
-          tags: data.tags ? data.tags : [],
-          isShared: false,
-        };
+    if (error || !result) {
+      return;
+    } else {
+      let postData = {
+        description: data.description,
+        user: data._id,
+        postImage: data.imageUrl,
+        urlTitle: result.og.title || result.meta.title,
+        urlImage: result.og.image
+          ? result.og.image
+          : result.images[0]
+          ? result.images[0]["src"]
+          : post_url,
+        url: result.og.url ? result.og.url : post_url,
+        tags: data.tags ? data.tags : [],
+        isShared: false,
+      };
 
-        await Post.create(postData);
-      }
+      await Post.create(postData);
+    }
   } else {
     const post = await Post.create({
       description: data.description,
@@ -103,17 +99,16 @@ const createPost = async (data) => {
   }
 };
 
-async function createUser2() {
+async function createUser2(usersToAdd) {
   try {
     let i = 0;
     const interval = setInterval(async () => {
-      if (i == userData.length) {
-        createFollwers(interval);
-        // clearInterval(interval);
+      if (i == usersToAdd.length) {
+        createFollowers(interval);
         return;
       }
 
-      let data = userData[i];
+      let data = usersToAdd[i];
 
       let findUser = await User.findOne({ email: data.email });
 
@@ -123,14 +118,16 @@ async function createUser2() {
 
       let user = await User.create(data);
 
-      const post = {
-        description: postData[user.email].description,
-        post_url: postData[user.email].url,
-        imageUrl: postData[user.email].postImage,
-        _id: user._id,
-        email: user.email,
-      };
-      createPost(post);
+      if (postData[user.email]) {
+        const post = {
+          description: postData[user.email].description,
+          post_url: postData[user.email].url,
+          imageUrl: postData[user.email].postImage,
+          _id: user._id,
+          email: user.email,
+        };
+        createPost(post);
+      }
       i++;
     }, 500);
   } catch (error) {
@@ -138,4 +135,12 @@ async function createUser2() {
   }
 }
 
-createUser2();
+// Modify to receive user data directly from parent process
+if (process.send) {
+  process.on('message', (usersToAdd) => {
+    createUser2(usersToAdd);
+  });
+} else {
+  createUser2(userData); // Fallback if not run as a child process
+}
+

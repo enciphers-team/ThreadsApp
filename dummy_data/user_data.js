@@ -1,69 +1,69 @@
 const data = [
   {
-    email: "benjamin.brian@myseucrecorp.com",
+    email: "benjamin.brian@mysecurecorp.com",
     password: "xUxZu4LaV",
     name: "Benjamin.brian",
     bio: "Enthusiastic developer with a passion for coding and innovation.",
     webLink: "https://mysecurecorp.com/benjamin.brian"
   },
   {
-    email: "kenneth.jack@myseucrecorp.com",
+    email: "kenneth.jack@mysecurecorp.com",
     password: "&syyLq6wBt",
     name: "Kenneth.jack",
     bio: "Experienced engineer always looking for new challenges.",
     webLink: "https://mysecurecorp.com/kenneth.jack"
   },
   {
-    email: "larry.justin@myseucrecorp.com",
+    email: "larry.justin@mysecurecorp.com",
     password: "3nALMRSJ=b",
     name: "Larry.justin",
     bio: "Tech enthusiast who loves to learn and explore new technologies.",
     webLink: "https://mysecurecorp.com/larry.justin"
   },
   {
-    email: "michael.joseph@myseucrecorp.com",
+    email: "michael.joseph@mysecurecorp.com",
     password: "?EtZdX9tRQ",
     name: "Michael.joseph",
     bio: "Dedicated professional with a keen eye for detail.",
     webLink: "https://mysecurecorp.com/michael.joseph"
   },
   {
-    email: "jack.joshua@myseucrecorp.com",
+    email: "jack.joshua@mysecurecorp.com",
     password: "UrW&bA5jMp",
     name: "Jack.joshua",
     bio: "Creative problem-solver with a background in software development.",
     webLink: "https://mysecurecorp.com/jack.joshua"
   },
   {
-    email: "scott.brandon@myseucrecorp.com",
+    email: "scott.brandon@mysecurecorp.com",
     password: "+jnSvEY2tz",
     name: "Scott.brandon",
     bio: "Committed team player who thrives in collaborative environments.",
     webLink: "https://mysecurecorp.com/scott.brandon"
   },
   {
-    email: "ryan.dennis@myseucrecorp.com",
+    email: "ryan.dennis@mysecurecorp.com",
     password: "ss_4jTtDGB",
     name: "Ryan.dennis",
     bio: "Innovative thinker with a strong technical background.",
     webLink: "https://mysecurecorp.com/ryan.dennis"
   },
   {
-    email: "justin.gregory@myseucrecorp.com",
+    email: "justin.gregory@mysecurecorp.com",
     password: "kFDh3d@meF",
     name: "Justin.gregory",
     bio: "Results-driven individual with a focus on quality and efficiency.",
     webLink: "https://mysecurecorp.com/justin.gregory"
   },
   {
-    email: "alexander.joshua@myseucrecorp.com",
+    email: "alexander.joshua@mysecurecorp.com",
     password: "HpRB@8yHuy",
     name: "Alexander.joshua",
     bio: "Motivated self-starter who excels in dynamic settings.",
     webLink: "https://mysecurecorp.com/alexander.joshua"
   },
   {
-    email: "jack.joseph@myseucrecorp.com",
+    email: "jack.joseph@mysecurecorp.com",
     password: "vDa4x/Lqyr",
     name: "Jack.joseph",
     bio: "Versatile programmer with a love for continuous learning.",

@@ -62,7 +62,7 @@ module.exports.isAuth = async (req, res, next) => {
 
 module.exports.profile = async function (req, res) {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select('-password');;
     if(user) {
       return res.status(200).json(user);
     } else {
